@@ -236,7 +236,10 @@ const ctx = canvas.getContext("2d");
 const baseDuck = new Image();
 baseDuck.src = "assets/Profile.png"; // adjust if needed
 
+let imageReady = false;
+
 baseDuck.onload = function() {
+  imageReady = true;
   console.log("Duck loaded successfully");
 };
 
@@ -513,6 +516,10 @@ vignette.addColorStop(1,"rgba(0,0,0,0.4)");
 ctx.fillStyle = vignette;
 ctx.fillRect(0,0,800,800);
 
+function drawDuck() {
+  if (!imageReady) return;
+  ctx.drawImage(baseDuck, 0, 0, 800, 800);
+}
 
 function generatePFP() {
 
@@ -561,6 +568,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
