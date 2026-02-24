@@ -255,6 +255,16 @@ footer {
   color: #052e16;
 }
 
+/* ROTATE WHEN PLAYING */
+@keyframes spinMusic {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.music-toggle.playing {
+  animation: spinMusic 4s linear infinite;
+}
+
 /* MEME VAULT (HIDDEN) */
 .meme-vault {
   display: none;
@@ -622,4 +632,5 @@ h2 {
 html {
   scroll-behavior: smooth;
 }
+
 
