@@ -253,52 +253,151 @@ function drawBackground() {
 }
 
 function drawSunglasses() {
-  if (Math.random() > 0.7) return;
+  if (Math.random() > 0.8) return;
 
-  ctx.fillStyle = "black";
+  const style = Math.floor(Math.random() * 3);
+  const tilt = (Math.random() - 0.5) * 0.2;
 
-  // left lens
-  ctx.fillRect(260, 330, 140, 70);
+  ctx.save();
+  ctx.translate(400, 365);
+  ctx.rotate(tilt);
 
-  // right lens
-  ctx.fillRect(400, 330, 140, 70);
+  addShadow(15);
 
-  // bridge
-  ctx.fillRect(380, 355, 40, 20);
+  if (style === 0) {
+    // Classic
+    ctx.fillStyle = "#111";
+    ctx.fillRect(-150, -40, 120, 80);
+    ctx.fillRect(30, -40, 120, 80);
+    ctx.fillRect(-30, -10, 60, 20);
+  }
+
+  if (style === 1) {
+    // Round 3D
+    const gradient = ctx.createRadialGradient(0,0,10,0,0,70);
+    gradient.addColorStop(0,"#222");
+    gradient.addColorStop(1,"#000");
+
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(-90, 0, 60, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(90, 0, 60, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  if (style === 2) {
+    // Deal with it style
+    ctx.fillStyle = "black";
+    ctx.fillRect(-170, -30, 340, 60);
+  }
+
+  clearShadow();
+  ctx.restore();
 }
 
 function drawHat() {
   if (Math.random() > 0.7) return;
 
-  ctx.fillStyle = randomColor();
+  const type = Math.floor(Math.random() * 3);
+  const tilt = (Math.random() - 0.5) * 0.15;
 
-  // crown
-  ctx.beginPath();
-  ctx.ellipse(400, 200, 220, 110, 0, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.save();
+  ctx.translate(400, 210);
+  ctx.rotate(tilt);
+  addShadow(30);
 
-  // brim
-  ctx.fillRect(270, 250, 260, 40);
+  if (type === 0) {
+    // Fedora
+    ctx.fillStyle = randomColor();
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 220, 110, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(-250, 60, 500, 40);
+  }
+
+  if (type === 1) {
+    // Beanie
+    ctx.fillStyle = randomColor();
+    ctx.beginPath();
+    ctx.arc(0, 40, 200, Math.PI, 0);
+    ctx.fill();
+  }
+
+  if (type === 2) {
+    // Crown
+    ctx.fillStyle = "gold";
+    ctx.fillRect(-180, 0, 360, 90);
+
+    ctx.beginPath();
+    ctx.moveTo(-180, 0);
+    ctx.lineTo(-120, -80);
+    ctx.lineTo(-60, 0);
+    ctx.lineTo(0, -80);
+    ctx.lineTo(60, 0);
+    ctx.lineTo(120, -80);
+    ctx.lineTo(180, 0);
+    ctx.fill();
+  }
+
+  clearShadow();
+  ctx.restore();
 }
 
 function drawChain() {
   if (Math.random() > 0.6) return;
 
-  ctx.strokeStyle = "gold";
-  ctx.lineWidth = 20;
+  ctx.save();
+  addShadow(25);
+
+  const gradient = ctx.createLinearGradient(0, 500, 0, 650);
+  gradient.addColorStop(0, "#fff4a3");
+  gradient.addColorStop(0.5, "gold");
+  gradient.addColorStop(1, "#b8860b");
+
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 28;
+
   ctx.beginPath();
-  ctx.arc(400, 590, 170, 0, Math.PI);
+  ctx.arc(400, 600, 180, 0, Math.PI);
   ctx.stroke();
+
+  clearShadow();
+  ctx.restore();
 }
 
 function drawCigar() {
-  if (Math.random() > 0.5) return;
+  if (Math.random() > 0.75) return;
 
-  ctx.fillStyle = "brown";
-  ctx.fillRect(520, 450, 120, 20);
+  const type = Math.floor(Math.random() * 3);
 
-  ctx.fillStyle = "red";
-  ctx.fillRect(640, 450, 15, 20);
+  ctx.save();
+  ctx.translate(580, 490);
+  addShadow(10);
+
+  if (type === 0) {
+    ctx.fillStyle = "#5c3b1e";
+    ctx.fillRect(0, 0, 120, 28);
+    ctx.fillStyle = "red";
+    ctx.fillRect(105, 0, 15, 28);
+  }
+
+  if (type === 1) {
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, 80, 18);
+  }
+
+  if (type === 2) {
+    ctx.fillStyle = "hotpink";
+    ctx.beginPath();
+    ctx.arc(40, 10, 20, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  clearShadow();
+  ctx.restore();
 }
 
 function generatePFP() {
@@ -312,6 +411,26 @@ function generatePFP() {
   drawSunglasses();
   drawHat();
 }
+
+function addShadow(blur = 20, offsetX = 0, offsetY = 8, color = "rgba(0,0,0,0.5)") {
+  ctx.shadowBlur = blur;
+  ctx.shadowOffsetX = offsetX;
+  ctx.shadowOffsetY = offsetY;
+  ctx.shadowColor = color;
+}
+
+function clearShadow() {
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
+}
+
+// subtle vignette
+const vignette = ctx.createRadialGradient(400,400,200,400,400,600);
+vignette.addColorStop(0,"rgba(0,0,0,0)");
+vignette.addColorStop(1,"rgba(0,0,0,0.4)");
+ctx.fillStyle = vignette;
+ctx.fillRect(0,0,800,800);
 
 generateBtn.addEventListener("click", generatePFP);
 
@@ -343,6 +462,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
