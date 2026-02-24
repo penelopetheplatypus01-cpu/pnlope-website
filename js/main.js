@@ -229,6 +229,8 @@ setTimeout(() => {
   setInterval(randomBuy, 5500);
 }, 2000);
 
+
+/* Profile Generator */
 const canvas = document.getElementById("pfpCanvas");
 const ctx = canvas.getContext("2d");
 const baseDuck = document.getElementById("baseDuck");
@@ -236,42 +238,56 @@ const baseDuck = document.getElementById("baseDuck");
 const generateBtn = document.getElementById("generateBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 
+baseDuck.crossOrigin = "anonymous";
+
 function randomColor() {
-  return `hsl(${Math.random()*360}, 70%, 60%)`;
+  return `hsl(${Math.random()*360}, 70%, 55%)`;
 }
 
 function drawBackground() {
-  const gradient = ctx.createLinearGradient(0,0,800,800);
+  const gradient = ctx.createRadialGradient(400,400,50,400,400,600);
   gradient.addColorStop(0, randomColor());
-  gradient.addColorStop(1, randomColor());
+  gradient.addColorStop(1, "#111");
   ctx.fillStyle = gradient;
   ctx.fillRect(0,0,800,800);
 }
 
 function drawSunglasses() {
-  if (Math.random() > 0.5) return;
+  if (Math.random() > 0.7) return;
 
   ctx.fillStyle = "black";
-  ctx.fillRect(250, 320, 120, 60);
-  ctx.fillRect(430, 320, 120, 60);
-  ctx.fillRect(370, 340, 60, 20);
+
+  // left lens
+  ctx.fillRect(260, 330, 140, 70);
+
+  // right lens
+  ctx.fillRect(400, 330, 140, 70);
+
+  // bridge
+  ctx.fillRect(380, 355, 40, 20);
 }
 
 function drawHat() {
-  if (Math.random() > 0.5) return;
+  if (Math.random() > 0.7) return;
 
   ctx.fillStyle = randomColor();
-  ctx.fillRect(250, 150, 300, 120);
-  ctx.fillRect(300, 250, 200, 40);
+
+  // crown
+  ctx.beginPath();
+  ctx.ellipse(400, 200, 220, 110, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // brim
+  ctx.fillRect(270, 250, 260, 40);
 }
 
 function drawChain() {
-  if (Math.random() > 0.5) return;
+  if (Math.random() > 0.6) return;
 
   ctx.strokeStyle = "gold";
-  ctx.lineWidth = 15;
+  ctx.lineWidth = 20;
   ctx.beginPath();
-  ctx.arc(400, 550, 150, 0, Math.PI);
+  ctx.arc(400, 590, 170, 0, Math.PI);
   ctx.stroke();
 }
 
@@ -290,6 +306,7 @@ function generatePFP() {
 
   drawBackground();
   ctx.drawImage(baseDuck, 0, 0, 800, 800);
+
   drawChain();
   drawCigar();
   drawSunglasses();
@@ -299,10 +316,14 @@ function generatePFP() {
 generateBtn.addEventListener("click", generatePFP);
 
 downloadBtn.addEventListener("click", () => {
-  const link = document.createElement("a");
-  link.download = "pnlope-pfp.png";
-  link.href = canvas.toDataURL();
-  link.click();
+  try {
+    const link = document.createElement("a");
+    link.download = "pnlope-pfp.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  } catch (err) {
+    alert("Generate image first.");
+  }
 });
 
 /* REVEAL */
@@ -322,6 +343,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
