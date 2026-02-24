@@ -233,7 +233,12 @@ setTimeout(() => {
 /* Profile Generator */
 const canvas = document.getElementById("pfpCanvas");
 const ctx = canvas.getContext("2d");
-const baseDuck = document.getElementById("baseDuck");
+const baseDuck = new Image();
+baseDuck.src = "assets/Profile.png"; // adjust if needed
+
+baseDuck.onload = function() {
+  console.log("Duck loaded successfully");
+};
 
 const generateBtn = document.getElementById("generateBtn");
 const downloadBtn = document.getElementById("downloadBtn");
@@ -556,6 +561,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
