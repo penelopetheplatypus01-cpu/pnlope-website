@@ -229,6 +229,82 @@ setTimeout(() => {
   setInterval(randomBuy, 5500);
 }, 2000);
 
+const canvas = document.getElementById("pfpCanvas");
+const ctx = canvas.getContext("2d");
+const baseDuck = document.getElementById("baseDuck");
+
+const generateBtn = document.getElementById("generateBtn");
+const downloadBtn = document.getElementById("downloadBtn");
+
+function randomColor() {
+  return `hsl(${Math.random()*360}, 70%, 60%)`;
+}
+
+function drawBackground() {
+  const gradient = ctx.createLinearGradient(0,0,800,800);
+  gradient.addColorStop(0, randomColor());
+  gradient.addColorStop(1, randomColor());
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,800,800);
+}
+
+function drawSunglasses() {
+  if (Math.random() > 0.5) return;
+
+  ctx.fillStyle = "black";
+  ctx.fillRect(250, 320, 120, 60);
+  ctx.fillRect(430, 320, 120, 60);
+  ctx.fillRect(370, 340, 60, 20);
+}
+
+function drawHat() {
+  if (Math.random() > 0.5) return;
+
+  ctx.fillStyle = randomColor();
+  ctx.fillRect(250, 150, 300, 120);
+  ctx.fillRect(300, 250, 200, 40);
+}
+
+function drawChain() {
+  if (Math.random() > 0.5) return;
+
+  ctx.strokeStyle = "gold";
+  ctx.lineWidth = 15;
+  ctx.beginPath();
+  ctx.arc(400, 550, 150, 0, Math.PI);
+  ctx.stroke();
+}
+
+function drawCigar() {
+  if (Math.random() > 0.5) return;
+
+  ctx.fillStyle = "brown";
+  ctx.fillRect(520, 450, 120, 20);
+
+  ctx.fillStyle = "red";
+  ctx.fillRect(640, 450, 15, 20);
+}
+
+function generatePFP() {
+  ctx.clearRect(0,0,800,800);
+
+  drawBackground();
+  ctx.drawImage(baseDuck, 0, 0, 800, 800);
+  drawChain();
+  drawCigar();
+  drawSunglasses();
+  drawHat();
+}
+
+generateBtn.addEventListener("click", generatePFP);
+
+downloadBtn.addEventListener("click", () => {
+  const link = document.createElement("a");
+  link.download = "pnlope-pfp.png";
+  link.href = canvas.toDataURL();
+  link.click();
+});
+
 /* REVEAL */
 const revealElements = document.querySelectorAll(".reveal");
 
@@ -246,5 +322,6 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
