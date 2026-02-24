@@ -487,21 +487,6 @@ function drawCigar() {
   ctx.restore();
 }
 
-function generatePFP() {
-
-  ctx.clearRect(0, 0, 800, 800);
-
-  const rarity = drawBackground();  // BACKGROUND FIRST
-
-  drawDuck();       // your base image
-  drawJacket();     // jacket under chain
-  drawChain();
-  drawHat();
-  drawSunglasses();
-  drawCigar();
-
-  console.log("Background rarity:", rarity);
-}
 
 function addShadow(blur = 20, offsetX = 0, offsetY = 8, color = "rgba(0,0,0,0.5)") {
   ctx.shadowBlur = blur;
@@ -522,6 +507,24 @@ vignette.addColorStop(0,"rgba(0,0,0,0)");
 vignette.addColorStop(1,"rgba(0,0,0,0.4)");
 ctx.fillStyle = vignette;
 ctx.fillRect(0,0,800,800);
+
+
+function generatePFP() {
+
+  ctx.clearRect(0, 0, 800, 800);
+
+  const rarity = drawBackground();  // BACKGROUND FIRST
+
+  drawDuck();       // your base image
+  drawJacket();     // jacket under chain
+  drawChain();
+  drawHat();
+  drawSunglasses();
+  drawCigar();
+
+  console.log("Background rarity:", rarity);
+}
+
 
 generateBtn.addEventListener("click", generatePFP);
 
@@ -553,6 +556,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
