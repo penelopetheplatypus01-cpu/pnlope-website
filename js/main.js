@@ -245,54 +245,117 @@ function randomColor() {
 }
 
 function drawBackground() {
-  const gradient = ctx.createRadialGradient(400,400,50,400,400,600);
-  gradient.addColorStop(0, randomColor());
-  gradient.addColorStop(1, "#111");
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0,0,800,800);
+
+  const roll = Math.random();
+  let rarity;
+
+  if (roll < 0.7) rarity = "common";
+  else if (roll < 0.93) rarity = "rare";
+  else rarity = "legendary";
+
+  if (rarity === "common") {
+    const colors = ["#87CEEB", "#FFB6C1", "#98FB98", "#FFD580"];
+    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+    ctx.fillRect(0, 0, 800, 800);
+  }
+
+  if (rarity === "rare") {
+    const gradient = ctx.createLinearGradient(0, 0, 800, 800);
+    gradient.addColorStop(0, randomColor());
+    gradient.addColorStop(1, randomColor());
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 800, 800);
+  }
+
+  if (rarity === "legendary") {
+    const gradient = ctx.createRadialGradient(400, 400, 50, 400, 400, 600);
+    gradient.addColorStop(0, "gold");
+    gradient.addColorStop(0.5, "#ff8c00");
+    gradient.addColorStop(1, "black");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 800, 800);
+
+    // sparkle effect
+    for (let i = 0; i < 40; i++) {
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(Math.random() * 800, Math.random() * 800, Math.random() * 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  return rarity;
 }
 
-function drawSunglasses() {
-  if (Math.random() > 0.8) return;
+function drawJacket() {
+
+  if (Math.random() > 0.85) return;
 
   const style = Math.floor(Math.random() * 3);
-  const tilt = (Math.random() - 0.5) * 0.2;
 
   ctx.save();
-  ctx.translate(400, 365);
-  ctx.rotate(tilt);
+  ctx.translate(400, 620);
+  addShadow(35);
 
-  addShadow(15);
+  // gradient for 3D fabric
+  const fabric = ctx.createLinearGradient(0, -200, 0, 200);
+  fabric.addColorStop(0, randomColor());
+  fabric.addColorStop(1, "#111");
+
+  ctx.fillStyle = fabric;
 
   if (style === 0) {
-    // Classic
-    ctx.fillStyle = "#111";
-    ctx.fillRect(-150, -40, 120, 80);
-    ctx.fillRect(30, -40, 120, 80);
-    ctx.fillRect(-30, -10, 60, 20);
+    // Hoodie
+    ctx.beginPath();
+    ctx.moveTo(-260, -120);
+    ctx.lineTo(260, -120);
+    ctx.lineTo(300, 200);
+    ctx.lineTo(-300, 200);
+    ctx.closePath();
+    ctx.fill();
   }
 
   if (style === 1) {
-    // Round 3D
-    const gradient = ctx.createRadialGradient(0,0,10,0,0,70);
-    gradient.addColorStop(0,"#222");
-    gradient.addColorStop(1,"#000");
+    // Leather jacket
+    ctx.fillRect(-280, -100, 560, 300);
 
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.arc(-90, 0, 60, 0, Math.PI*2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(90, 0, 60, 0, Math.PI*2);
-    ctx.fill();
+    ctx.fillStyle = "black";
+    ctx.fillRect(-20, -100, 40, 300);
   }
 
   if (style === 2) {
-    // Deal with it style
-    ctx.fillStyle = "black";
-    ctx.fillRect(-170, -30, 340, 60);
+    // Blazer
+    ctx.fillRect(-240, -100, 480, 260);
+
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.moveTo(0, -100);
+    ctx.lineTo(100, 100);
+    ctx.lineTo(-100, 100);
+    ctx.fill();
   }
+
+  clearShadow();
+  ctx.restore();
+}
+
+function drawChain() {
+  if (Math.random() > 0.6) return;
+
+  ctx.save();
+  addShadow(25);
+
+  const gradient = ctx.createLinearGradient(0, 500, 0, 650);
+  gradient.addColorStop(0, "#fff4a3");
+  gradient.addColorStop(0.5, "gold");
+  gradient.addColorStop(1, "#b8860b");
+
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 28;
+
+  ctx.beginPath();
+  ctx.arc(400, 600, 180, 0, Math.PI);
+  ctx.stroke();
 
   clearShadow();
   ctx.restore();
@@ -346,23 +409,47 @@ function drawHat() {
   ctx.restore();
 }
 
-function drawChain() {
-  if (Math.random() > 0.6) return;
+function drawSunglasses() {
+  if (Math.random() > 0.8) return;
+
+  const style = Math.floor(Math.random() * 3);
+  const tilt = (Math.random() - 0.5) * 0.2;
 
   ctx.save();
-  addShadow(25);
+  ctx.translate(400, 365);
+  ctx.rotate(tilt);
 
-  const gradient = ctx.createLinearGradient(0, 500, 0, 650);
-  gradient.addColorStop(0, "#fff4a3");
-  gradient.addColorStop(0.5, "gold");
-  gradient.addColorStop(1, "#b8860b");
+  addShadow(15);
 
-  ctx.strokeStyle = gradient;
-  ctx.lineWidth = 28;
+  if (style === 0) {
+    // Classic
+    ctx.fillStyle = "#111";
+    ctx.fillRect(-150, -40, 120, 80);
+    ctx.fillRect(30, -40, 120, 80);
+    ctx.fillRect(-30, -10, 60, 20);
+  }
 
-  ctx.beginPath();
-  ctx.arc(400, 600, 180, 0, Math.PI);
-  ctx.stroke();
+  if (style === 1) {
+    // Round 3D
+    const gradient = ctx.createRadialGradient(0,0,10,0,0,70);
+    gradient.addColorStop(0,"#222");
+    gradient.addColorStop(1,"#000");
+
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(-90, 0, 60, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(90, 0, 60, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  if (style === 2) {
+    // Deal with it style
+    ctx.fillStyle = "black";
+    ctx.fillRect(-170, -30, 340, 60);
+  }
 
   clearShadow();
   ctx.restore();
@@ -401,15 +488,19 @@ function drawCigar() {
 }
 
 function generatePFP() {
-  ctx.clearRect(0,0,800,800);
 
-  drawBackground();
-  ctx.drawImage(baseDuck, 0, 0, 800, 800);
+  ctx.clearRect(0, 0, 800, 800);
 
+  const rarity = drawBackground();  // BACKGROUND FIRST
+
+  drawDuck();       // your base image
+  drawJacket();     // jacket under chain
   drawChain();
-  drawCigar();
-  drawSunglasses();
   drawHat();
+  drawSunglasses();
+  drawCigar();
+
+  console.log("Background rarity:", rarity);
 }
 
 function addShadow(blur = 20, offsetX = 0, offsetY = 8, color = "rgba(0,0,0,0.5)") {
@@ -462,6 +553,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
