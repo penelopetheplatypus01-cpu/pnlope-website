@@ -147,29 +147,29 @@ const escapeOnce = () => {
   const maxX = window.innerWidth  - buyBtn.offsetWidth  - padding;
   const maxY = window.innerHeight - buyBtn.offsetHeight - padding;
 
-  // Lock starting position
+
   const rect = buyBtn.getBoundingClientRect();
   buyBtn.style.left   = `${rect.left}px`;
   buyBtn.style.top    = `${rect.top}px`;
   buyBtn.style.right  = 'auto';
   buyBtn.style.bottom = 'auto';
 
-  // Final destination
+
   const finalX = Math.random() * maxX;
   const finalY = Math.random() * maxY;
 
-  // Generate zigzag waypoints between start and final
+ 
   const steps = 7;
   const waypoints = [];
 
   for (let i = 1; i <= steps; i++) {
     const progress = i / (steps + 1);
 
-    // Linear interpolation toward final + perpendicular zigzag offset
+    
     const baseX = rect.left + (finalX - rect.left) * progress;
     const baseY = rect.top  + (finalY - rect.top)  * progress;
 
-    // Alternate left/right zigzag — bigger swings in the middle
+    
     const swing = 220 * Math.sin(progress * Math.PI);
     const side  = i % 2 === 0 ? 1 : -1;
 
@@ -179,11 +179,10 @@ const escapeOnce = () => {
     waypoints.push({ x: wx, y: wy });
   }
 
-  // Add final destination
   waypoints.push({ x: finalX, y: finalY });
 
   const texts = ['👀', 'heh', 'lol', '...', 'nope', 'bye', 'lmao', "CAN'T CATCH ME 🦆"];
-  const stepDuration = 160; // ms per zigzag step
+  const stepDuration = 250; 
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -192,20 +191,21 @@ const escapeOnce = () => {
         setTimeout(() => {
           const isLast = index === waypoints.length - 1;
 
-          buyBtn.style.transition = isLast
-            ? `left 0.45s cubic-bezier(0.25, 1.4, 0.5, 1), top 0.45s cubic-bezier(0.25, 1.4, 0.5, 1)`
-            : `left ${stepDuration}ms cubic-bezier(0.4, 0, 0.2, 1), top ${stepDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+buyBtn.style.transition = isLast
+  ? `left 0.45s cubic-bezier(0.25, 1.4, 0.5, 1), top 0.45s cubic-bezier(0.25, 1.4, 0.5, 1)`
+  : `left 200ms cubic-bezier(0.4, 0, 0.2, 1), top 200ms cubic-bezier(0.4, 0, 0.2, 1)`;
+  
 
           buyBtn.style.left = `${point.x}px`;
           buyBtn.style.top  = `${point.y}px`;
 
-          // Change text at each step
+
           if (texts[index]) buyBtn.innerText = texts[index];
 
         }, index * stepDuration);
       });
 
-      // Clean up after all steps finish
+
       setTimeout(() => {
         buyBtn.style.transition = '';
         if (!isDragging) buyBtn.innerText = normalTexts[textIndex % normalTexts.length];
@@ -709,4 +709,5 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
