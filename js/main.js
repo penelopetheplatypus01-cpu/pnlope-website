@@ -312,41 +312,53 @@ function drawBackground() {
 }
 
 function drawJacket(FACE) {
+
   ctx.save();
-  ctx.translate(FACE.centerX, FACE.neckY + 60);
+  ctx.translate(FACE.centerX, FACE.neckY + 80);
 
-  const width = 560 * FACE.scale;
-  const height = 260 * FACE.scale;
+  const width = 600 * FACE.scale;
+  const height = 300 * FACE.scale;
 
-  // Base color
-  const jacketGradient = ctx.createLinearGradient(0, -height, 0, height);
-  jacketGradient.addColorStop(0, randomColor());
-  jacketGradient.addColorStop(1, "#111");
+  // Base gradient
+  const base = ctx.createLinearGradient(0, -height, 0, height);
+  const color = randomColor();
+  base.addColorStop(0, lighten(color, 30));
+  base.addColorStop(1, darken(color, 40));
 
-  ctx.fillStyle = jacketGradient;
-  ctx.fillRect(-width/2, -80, width, height);
+  ctx.fillStyle = base;
+  ctx.fillRect(-width/2, -100, width, height);
+
+  // Wrinkle shading
+  ctx.globalAlpha = 0.25;
+
+  for (let i = 0; i < 20; i++) {
+    const x = (Math.random() - 0.5) * width;
+    const y = (Math.random() - 0.5) * height;
+
+    const wrinkle = ctx.createLinearGradient(
+      x, y,
+      x + 80, y + 40
+    );
+
+    wrinkle.addColorStop(0, "rgba(0,0,0,0.5)");
+    wrinkle.addColorStop(1, "transparent");
+
+    ctx.fillStyle = wrinkle;
+    ctx.fillRect(x, y, 120, 60);
+  }
+
+  ctx.globalAlpha = 1;
+
   // Stitch lines
   ctx.strokeStyle = "rgba(255,255,255,0.3)";
   ctx.lineWidth = 2;
 
-for (let i = -250; i <= 250; i += 30) {
-  ctx.beginPath();
-  ctx.moveTo(i, -60);
-  ctx.lineTo(i, 180);
-  ctx.stroke();
-}
-  // Cloth texture overlay
-  ctx.globalAlpha = 0.08;
-  for (let i = 0; i < 400; i++) {
-    ctx.fillStyle = "#000";
-    ctx.fillRect(
-      (Math.random() - 0.5) * width,
-      (Math.random() - 0.5) * height,
-      2,
-      2
-    );
+  for (let i = -250; i <= 250; i += 35) {
+    ctx.beginPath();
+    ctx.moveTo(i, -60);
+    ctx.lineTo(i, 180);
+    ctx.stroke();
   }
-  ctx.globalAlpha = 1;
 
   ctx.restore();
 }
@@ -409,81 +421,107 @@ function drawChain(FACE) {
 
 function drawHat(FACE) {
 
-  const style = Math.floor(Math.random() * 3);
+  const type = Math.floor(Math.random() * 5);
 
   ctx.save();
-  ctx.translate(FACE.centerX, FACE.headTopY - 20);
+  ctx.translate(FACE.centerX, FACE.headTopY - 30);
 
-  const radius = 220 * FACE.scale;
+  const scale = FACE.scale * 1.2;
 
-  // 3D dome gradient
-  const dome = ctx.createRadialGradient(
-    -60, -60, 50,
-    0, 0, radius
-  );
+  if (type === 0) { // Dome cap
+    const grad = ctx.createRadialGradient(-50, -40, 20, 0, 0, 200);
+    grad.addColorStop(0, "#fff");
+    grad.addColorStop(1, randomColor());
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(0, 100, 220 * scale, Math.PI, 0);
+    ctx.fill();
+  }
 
-  dome.addColorStop(0, "#ffffff");
-  dome.addColorStop(0.2, randomColor());
-  dome.addColorStop(1, "#111");
+  if (type === 1) { // Beanie
+    ctx.fillStyle = randomColor();
+    ctx.fillRect(-220 * scale, 40, 440 * scale, 140 * scale);
+  }
 
-  ctx.fillStyle = dome;
+  if (type === 2) { // Cowboy brim
+    ctx.fillStyle = randomColor();
+    ctx.fillRect(-300 * scale, 120, 600 * scale, 40);
+    ctx.beginPath();
+    ctx.arc(0, 120, 200 * scale, Math.PI, 0);
+    ctx.fill();
+  }
 
-  ctx.beginPath();
-  ctx.arc(0, 80, radius, Math.PI, 0);
-  ctx.fill();
+  if (type === 3) { // Top hat
+    ctx.fillStyle = randomColor();
+    ctx.fillRect(-120 * scale, 0, 240 * scale, 200 * scale);
+    ctx.fillRect(-220 * scale, 200 * scale, 440 * scale, 40);
+  }
 
-  // Brim
-  ctx.fillStyle = "#111";
-  ctx.fillRect(-radius - 20, 130, radius * 2 + 40, 35);
+  if (type === 4) { // Bucket hat
+    ctx.fillStyle = randomColor();
+    ctx.beginPath();
+    ctx.ellipse(0, 120, 240 * scale, 160 * scale, 0, Math.PI, 0);
+    ctx.fill();
+  }
 
   ctx.restore();
 }
 
 
 function drawSunglasses(FACE) {
-  if (Math.random() > 0.85) return;
+
+  const type = Math.floor(Math.random() * 5);
 
   ctx.save();
   ctx.translate(FACE.centerX, FACE.eyeY);
 
-  const lensWidth = 140 * FACE.scale;
-  const lensHeight = 80 * FACE.scale;
+  const w = 130 * FACE.scale;
+  const h = 80 * FACE.scale;
 
-  // Metallic reflection gradient
-  const lensGradient = ctx.createLinearGradient(
-    -lensWidth, -lensHeight,
-    lensWidth, lensHeight
-  );
-  lensGradient.addColorStop(0, "#ffffff");
-  lensGradient.addColorStop(0.2, "#999");
-  lensGradient.addColorStop(0.5, "#000");
-  lensGradient.addColorStop(0.8, "#666");
-  lensGradient.addColorStop(1, "#ffffff");
+  const metal = ctx.createLinearGradient(-w, -h, w, h);
+  metal.addColorStop(0, "#fff");
+  metal.addColorStop(0.3, "#999");
+  metal.addColorStop(0.6, "#000");
+  metal.addColorStop(1, "#fff");
 
-  ctx.fillStyle = lensGradient;
+  ctx.fillStyle = metal;
 
-  // Left lens
-  ctx.fillRect(-lensWidth - 20, -lensHeight / 2, lensWidth, lensHeight);
+  if (type === 0) {
+    ctx.fillRect(-w - 20, -h/2, w, h);
+    ctx.fillRect(20, -h/2, w, h);
+  }
 
-  // Right lens
-  ctx.fillRect(20, -lensHeight / 2, lensWidth, lensHeight);
+  if (type === 1) {
+    ctx.beginPath();
+    ctx.ellipse(-w/1.2, 0, w/1.5, h/2, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(w/1.2, 0, w/1.5, h/2, 0, 0, Math.PI*2);
+    ctx.fill();
+  }
 
-  ctx.globalAlpha = 0.3;
+  if (type === 2) {
+    ctx.fillRect(-w, -h/3, w*2, h/1.5);
+  }
 
-const sweep = ctx.createLinearGradient(
-  shineOffset, 0,
-  shineOffset + 200, 0
-);
-sweep.addColorStop(0, "transparent");
-sweep.addColorStop(0.5, "white");
-sweep.addColorStop(1, "transparent");
+  if (type === 3) {
+    ctx.beginPath();
+    ctx.arc(-w/1.2, 0, h/1.2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(w/1.2, 0, h/1.2, 0, Math.PI*2);
+    ctx.fill();
+  }
 
-ctx.fillStyle = sweep;
-ctx.fillRect(-300, -60, 600, 120);
-
-ctx.globalAlpha = 1;
-  // Bridge
-  ctx.fillRect(-20, -10, 40, 20);
+  if (type === 4) {
+    ctx.beginPath();
+    ctx.moveTo(-w, -h/2);
+    ctx.lineTo(w, -h/2);
+    ctx.lineTo(w/1.2, h/2);
+    ctx.lineTo(-w/1.2, h/2);
+    ctx.closePath();
+    ctx.fill();
+  }
 
   ctx.restore();
 }
@@ -548,8 +586,8 @@ function generatePFP() {
   ctx.clearRect(0, 0, 800, 800);
 
   const rarity = drawBackground();  // BACKGROUND FIRST
-  drawDuck(FACE);       // your base image
   const FACE = getFaceMetrics();
+  drawDuck(FACE);       // your base image
   drawJacket(FACE);     // jacket under chain
   drawChain(FACE);
   drawHat(FACE);
@@ -601,17 +639,4 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
-
-
-
-
-
-
-
-
-
-
-
-
-
 
