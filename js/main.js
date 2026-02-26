@@ -194,6 +194,8 @@ const names = [
   "Elon Musk"
 ];
 
+
+/* RANDOM BUYS */
 const ticker = document.getElementById("buyTicker");
 
 function randomBuy() {
@@ -205,17 +207,12 @@ function randomBuy() {
   document.querySelector(".ticker-message").innerHTML =
     `<strong>${name}</strong> just bought <strong>${amount} SOL</strong> of $PNLope ${emoji}`;
 
-  ticker.classList.add("show");
+  ticker.classList.add("show");        
 
   setTimeout(() => {
     ticker.classList.remove("show");
   }, 3500);
-}
-
-setTimeout(() => {
-  randomBuy();
-  setInterval(randomBuy, 5500);
-}, 2000);
+}                                       
 
 
 /* ===============================
@@ -659,5 +656,6 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
