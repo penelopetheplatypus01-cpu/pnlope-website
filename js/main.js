@@ -144,28 +144,55 @@ const escapeOnce = () => {
   hasEscaped = true;
 
   const padding = 20;
-  const maxX = window.innerWidth - buyBtn.offsetWidth - padding;
+  const maxX = window.innerWidth  - buyBtn.offsetWidth  - padding;
   const maxY = window.innerHeight - buyBtn.offsetHeight - padding;
 
+  // Lock current position
   const rect = buyBtn.getBoundingClientRect();
-  buyBtn.style.left = `${rect.left}px`;
-  buyBtn.style.top  = `${rect.top}px`;
+  buyBtn.style.left   = `${rect.left}px`;
+  buyBtn.style.top    = `${rect.top}px`;
   buyBtn.style.right  = 'auto';
   buyBtn.style.bottom = 'auto';
 
-requestAnimationFrame(() => {
-  requestAnimationFrame(() => {
-    buyBtn.classList.add('escaping');
-    buyBtn.style.left = `${Math.random() * maxX}px`;
-    buyBtn.style.top  = `${Math.random() * maxY}px`;
-    buyBtn.innerText  = "CAN'T CATCH ME 🦆";
-  });
-});
+  // Pick real destination
+  const realX = Math.random() * maxX;
+  const realY = Math.random() * maxY;
 
-  setTimeout(() => {
-    buyBtn.classList.remove('escaping');
-    if (!isDragging) buyBtn.innerText = normalTexts[textIndex % normalTexts.length];
-  }, 700);
+  // Pick a fake destination — opposite-ish direction from real one
+  const fakeX = rect.left + (realX - rect.left) * 0.25 + (Math.random() - 0.5) * 120;
+  const fakeY = rect.top  + (realY - rect.top)  * 0.25 + (Math.random() - 0.5) * 120;
+
+  // Clamp fake position so it stays on screen
+  const clampedFakeX = Math.min(Math.max(padding, fakeX), maxX);
+  const clampedFakeY = Math.min(Math.max(padding, fakeY), maxY);
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+
+      // ====== STEP 1: Fake move — slow & hesitant ======
+      buyBtn.style.transition = `left 0.25s ease-out, top 0.25s ease-out`;
+      buyBtn.style.left = `${clampedFakeX}px`;
+      buyBtn.style.top  = `${clampedFakeY}px`;
+      buyBtn.innerText  = '...';
+
+      // ====== STEP 2: Real escape — fast & bouncy ======
+      setTimeout(() => {
+        buyBtn.style.transition = `left 0.55s cubic-bezier(0.25, 1.5, 0.5, 1),
+                                   top  0.55s cubic-bezier(0.25, 1.5, 0.5, 1)`;
+        buyBtn.style.left = `${realX}px`;
+        buyBtn.style.top  = `${realY}px`;
+        buyBtn.innerText  = "CAN'T CATCH ME 🦆";
+      }, 280);
+
+      // ====== STEP 3: Clean up ======
+      setTimeout(() => {
+        buyBtn.style.transition = '';
+        buyBtn.classList.remove('escaping');
+        if (!isDragging) buyBtn.innerText = normalTexts[textIndex % normalTexts.length];
+      }, 900);
+
+    });
+  });
 };
 
 /* ===== EVENTS ===== */
@@ -662,8 +689,3 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
-
-
-
-
-
