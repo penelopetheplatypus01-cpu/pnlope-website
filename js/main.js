@@ -44,11 +44,7 @@ const buyTexts = [
   'ZOO ESCAPE PHASE',
   'CATCH ME!'
 ];
-let i = 0;
-setInterval(() => {
-  i = (i + 1) % buyTexts.length;
-  document.getElementById('floatingBuy').innerText = buyTexts[i];
-}, 2500);
+
 
 
 /* Floating Buy */
@@ -664,6 +660,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
