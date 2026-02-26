@@ -548,8 +548,8 @@ function generatePFP() {
   ctx.clearRect(0, 0, 800, 800);
 
   const rarity = drawBackground();  // BACKGROUND FIRST
-  const FACE = getFaceMetrics();
   drawDuck(FACE);       // your base image
+  const FACE = getFaceMetrics();
   drawJacket(FACE);     // jacket under chain
   drawChain(FACE);
   drawHat(FACE);
@@ -601,6 +601,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
