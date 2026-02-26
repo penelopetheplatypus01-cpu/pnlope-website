@@ -252,15 +252,21 @@ function randomColor() {
   return `hsl(${Math.random()*360}, 70%, 55%)`;
 }
 
-const FACE = {
-  centerX: 400,
-  centerY: 400,
-  eyeY: 360,
-  eyeOffsetX: 120,
-  mouthY: 490,
-  headTopY: 230,
-  neckY: 600
-};
+function getFaceMetrics() {
+  const w = canvas.width;
+  const h = canvas.height;
+
+  return {
+    centerX: w * 0.5,
+    centerY: h * 0.5,
+    eyeY: h * 0.45,
+    eyeOffsetX: w * 0.14,
+    mouthY: h * 0.62,
+    headTopY: h * 0.28,
+    neckY: h * 0.72,
+    scale: w / 800
+  };
+}
 
 function drawBackground() {
 
@@ -305,94 +311,73 @@ function drawBackground() {
   return rarity;
 }
 
-function drawJacket() {
-
-  if (Math.random() > 0.85) return;
-
-  const style = Math.floor(Math.random() * 3);
-
+function drawJacket(FACE) {
   ctx.save();
-  ctx.translate(FACE.centerX, 680);
-  ctx.fillRect(-280, -80, 560, 250);
-  addShadow(35);
+  ctx.translate(FACE.centerX, FACE.neckY + 60);
 
-  // gradient for 3D fabric
-  const fabric = ctx.createLinearGradient(0, -200, 0, 200);
-  fabric.addColorStop(0, randomColor());
-  fabric.addColorStop(1, "#111");
+  const width = 560 * FACE.scale;
+  const height = 260 * FACE.scale;
 
-  ctx.fillStyle = fabric;
+  // Base color
+  const jacketGradient = ctx.createLinearGradient(0, -height, 0, height);
+  jacketGradient.addColorStop(0, randomColor());
+  jacketGradient.addColorStop(1, "#111");
 
-  if (style === 0) {
-    // Hoodie
-    ctx.beginPath();
-    ctx.moveTo(-260, -120);
-    ctx.lineTo(260, -120);
-    ctx.lineTo(300, 200);
-    ctx.lineTo(-300, 200);
-    ctx.closePath();
-    ctx.fill();
+  ctx.fillStyle = jacketGradient;
+  ctx.fillRect(-width/2, -80, width, height);
+
+  // Cloth texture overlay
+  ctx.globalAlpha = 0.08;
+  for (let i = 0; i < 400; i++) {
+    ctx.fillStyle = "#000";
+    ctx.fillRect(
+      (Math.random() - 0.5) * width,
+      (Math.random() - 0.5) * height,
+      2,
+      2
+    );
   }
+  ctx.globalAlpha = 1;
 
-  if (style === 1) {
-    // Leather jacket
-    ctx.fillRect(-280, -100, 560, 300);
-
-    ctx.fillStyle = "black";
-    ctx.fillRect(-20, -100, 40, 300);
-  }
-
-  if (style === 2) {
-    // Blazer
-    ctx.fillRect(-240, -100, 480, 260);
-
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.moveTo(0, -100);
-    ctx.lineTo(100, 100);
-    ctx.lineTo(-100, 100);
-    ctx.fill();
-  }
-
-  clearShadow();
   ctx.restore();
 }
 
-function drawChain() {
+function drawChain(FACE) {
   if (Math.random() > 0.7) return;
 
   ctx.save();
   ctx.translate(FACE.centerX, FACE.neckY);
-  addShadow(25);
 
-  // Gold chain
-  const gold = ctx.createLinearGradient(0, -50, 0, 200);
-  gold.addColorStop(0, "#fff4a3");
-  gold.addColorStop(0.5, "#ffd700");
-  gold.addColorStop(1, "#b8860b");
+  const radius = 170 * FACE.scale;
+
+  const gold = ctx.createLinearGradient(0, -radius, 0, radius);
+  gold.addColorStop(0, "#fff8c6");
+  gold.addColorStop(0.3, "#ffd700");
+  gold.addColorStop(0.6, "#b8860b");
+  gold.addColorStop(1, "#fff8c6");
 
   ctx.strokeStyle = gold;
-  ctx.lineWidth = 18;
+  ctx.lineWidth = 20 * FACE.scale;
 
   ctx.beginPath();
-  ctx.arc(0, 0, 170, 0, Math.PI);
+  ctx.arc(0, 0, radius, 0, Math.PI);
   ctx.stroke();
 
   // Pendant
+  ctx.beginPath();
+  ctx.arc(0, radius, 50 * FACE.scale, 0, Math.PI * 2);
   ctx.fillStyle = gold;
-  ctx.beginPath();
-  ctx.arc(0, 170, 45, 0, Math.PI * 2);
   ctx.fill();
 
-  // Inner shine
-  ctx.fillStyle = "rgba(255,255,255,0.5)";
+  // Diamond shine
+  ctx.fillStyle = "rgba(255,255,255,0.6)";
   ctx.beginPath();
-  ctx.arc(-10, 150, 15, 0, Math.PI * 2);
+  ctx.arc(-15, radius - 20, 12, 0, Math.PI * 2);
   ctx.fill();
 
-  clearShadow();
   ctx.restore();
 }
+
 
 function drawHat() {
   if (Math.random() > 0.8) return;
@@ -417,44 +402,37 @@ function drawHat() {
   ctx.restore();
 }
 
-function drawSunglasses() {
+function drawSunglasses(FACE) {
   if (Math.random() > 0.85) return;
-
-  const style = Math.floor(Math.random() * 3);
-  const tilt = (Math.random() - 0.5) * 0.1;
 
   ctx.save();
   ctx.translate(FACE.centerX, FACE.eyeY);
-  ctx.rotate(tilt);
-  addShadow(20);
 
-  const lensGradient = ctx.createLinearGradient(-80, -40, 80, 40);
-  lensGradient.addColorStop(0, "#222");
-  lensGradient.addColorStop(1, "#000");
+  const lensWidth = 140 * FACE.scale;
+  const lensHeight = 80 * FACE.scale;
+
+  // Metallic reflection gradient
+  const lensGradient = ctx.createLinearGradient(
+    -lensWidth, -lensHeight,
+    lensWidth, lensHeight
+  );
+  lensGradient.addColorStop(0, "#ffffff");
+  lensGradient.addColorStop(0.2, "#999");
+  lensGradient.addColorStop(0.5, "#000");
+  lensGradient.addColorStop(0.8, "#666");
+  lensGradient.addColorStop(1, "#ffffff");
 
   ctx.fillStyle = lensGradient;
 
-  if (style === 0) {
-    ctx.fillRect(-180, -40, 140, 80);
-    ctx.fillRect(40, -40, 140, 80);
-    ctx.fillRect(-40, -10, 80, 20);
-  }
+  // Left lens
+  ctx.fillRect(-lensWidth - 20, -lensHeight / 2, lensWidth, lensHeight);
 
-  if (style === 1) {
-    ctx.beginPath();
-    ctx.arc(-90, 0, 60, 0, Math.PI * 2);
-    ctx.fill();
+  // Right lens
+  ctx.fillRect(20, -lensHeight / 2, lensWidth, lensHeight);
 
-    ctx.beginPath();
-    ctx.arc(90, 0, 60, 0, Math.PI * 2);
-    ctx.fill();
-  }
+  // Bridge
+  ctx.fillRect(-20, -10, 40, 20);
 
-  if (style === 2) {
-    ctx.fillRect(-200, -35, 400, 70);
-  }
-
-  clearShadow();
   ctx.restore();
 }
 
@@ -506,14 +484,14 @@ function generatePFP() {
   ctx.clearRect(0, 0, 800, 800);
 
   const rarity = drawBackground();  // BACKGROUND FIRST
-
-  drawDuck();       // your base image
-  drawJacket();     // jacket under chain
-  drawChain();
-  drawHat();
-  drawSunglasses();
-  drawCigar();
-
+  const FACE = getFaceMetrics();
+  drawDuck(FACE);       // your base image
+  drawJacket(FACE);     // jacket under chain
+  drawChain(FACE);
+  drawHat(FACE);
+  drawSunglasses(FACE);
+  drawCigar(FACE);
+  
   console.log("Background rarity:", rarity);
 }
 
@@ -548,6 +526,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
