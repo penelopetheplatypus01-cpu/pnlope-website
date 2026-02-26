@@ -37,15 +37,6 @@ function unlockVault() {
   });
 })();
 
-/* BUY TEXT ROTATION */
-const buyTexts = [
-  'APE OR REGRET',
-  'THIS IS YOUR SIGN',
-  'ZOO ESCAPE PHASE',
-  'CATCH ME!'
-];
-
-
 
 /* Floating Buy */
 const buyBtn = document.getElementById('floatingBuy');
@@ -209,9 +200,11 @@ function randomBuy() {
   const name = names[Math.floor(Math.random() * names.length)];
   const amount = (Math.random() * 4 + 0.1).toFixed(2);
   const emojis = ["🦆🔥", "🚀", "💰", "🐳", "⚡"];
+  const emoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-document.querySelector(".ticker-message").innerHTML =
-  `<strong>${name}</strong> just bought <strong>${amount} SOL</strong> of $PNLope ${emojis}`;
+  document.querySelector(".ticker-message").innerHTML =
+    `<strong>${name}</strong> just bought <strong>${amount} SOL</strong> of $PNLope ${emoji}`;
+}
 
   ticker.classList.add("show");
 
@@ -667,3 +660,4 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
