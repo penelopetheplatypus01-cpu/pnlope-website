@@ -193,7 +193,7 @@ const escapeOnce = () => {
 
 buyBtn.style.transition = isLast
   ? `left 0.45s cubic-bezier(0.25, 1.4, 0.5, 1), top 0.45s cubic-bezier(0.25, 1.4, 0.5, 1)`
-  : `left 200ms cubic-bezier(0.4, 0, 0.2, 1), top 500ms cubic-bezier(0.4, 0, 0.2, 1)`;
+  : `left 500ms cubic-bezier(0.4, 0, 0.2, 1), top 500ms cubic-bezier(0.4, 0, 0.2, 1)`;
   
 
           buyBtn.style.left = `${point.x}px`;
@@ -709,6 +709,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
