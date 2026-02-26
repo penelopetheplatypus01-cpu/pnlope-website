@@ -510,8 +510,8 @@ function drawHat(FACE) {
   if (type === 0) shadedDome(220 * scale); // cap
   if (type === 1) { // top hat
     ctx.fillStyle = color;
-    ctx.fillRect(-120, 0, 240, 200);
-    ctx.fillRect(-240, 200, 480, 40);
+    ctx.fillRect(-80, 0, 160, 180);
+    ctx.fillRect(-160, 180, 320, 35);
   }
   if (type === 2) { // cowboy
     ctx.fillStyle = color;
@@ -520,7 +520,7 @@ function drawHat(FACE) {
   }
   if (type === 3) { // beanie
     ctx.fillStyle = color;
-    ctx.fillRect(-240, 60, 480, 160);
+    ctx.fillRect(-160, 60, 320, 120);
   }
   if (type === 4) { // bucket
     ctx.fillStyle = color;
@@ -542,7 +542,7 @@ function drawHat(FACE) {
   }
   if (type === 7) { // visor
     ctx.fillStyle = color;
-    ctx.fillRect(-260, 120, 520, 50);
+    ctx.fillRect(-180, 100, 360, 45);
   }
 
   ctx.restore();
@@ -557,8 +557,8 @@ function drawSunglasses(FACE) {
   ctx.translate(FACE.centerX, FACE.eyeY);
 
   const type = Math.floor(Math.random() * 7);
-  const w = 140 * FACE.scale;
-  const h = 80 * FACE.scale;
+  const w = 100 * FACE.scale;
+  const h = 55 * FACE.scale;
 
   const lens = ctx.createLinearGradient(-w, -h, w, h);
   lens.addColorStop(0, "#ffffffaa");
@@ -670,15 +670,14 @@ function generatePFP() {
 function getFaceMetrics() {
   const w = canvas.width;
   const h = canvas.height;
-
   return {
-    centerX: w * 0.5,
-    centerY: h * 0.5,
-    eyeY:     h * 0.36,  
+    centerX:    w * 0.5,
+    centerY:    h * 0.5,
+    eyeY:       h * 0.38,  
     eyeOffsetX: w * 0.14,
-    mouthY:   h * 0.52, 
-    headTopY: h * 0.12,  
-    neckY:    h * 0.65,  
+    mouthY:     h * 0.52,
+    headTopY:   h * 0.10,
+    neckY:      h * 0.60,
     scale: w / 800
   };
 }
@@ -714,8 +713,4 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
-
-
-
-
 
