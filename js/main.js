@@ -147,19 +147,24 @@ const escapeOnce = () => {
   const maxX = window.innerWidth - buyBtn.offsetWidth - padding;
   const maxY = window.innerHeight - buyBtn.offsetHeight - padding;
 
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
-
-  buyBtn.style.left = `${randomX}px`;
-  buyBtn.style.top = `${randomY}px`;
-  buyBtn.style.right = 'auto';
+  const rect = buyBtn.getBoundingClientRect();
+  buyBtn.style.left = `${rect.left}px`;
+  buyBtn.style.top  = `${rect.top}px`;
+  buyBtn.style.right  = 'auto';
   buyBtn.style.bottom = 'auto';
 
-  buyBtn.innerText = 'CAN’T CATCH ME 🦆';
+  requestAnimationFrame(() => {
+    buyBtn.classList.add('escaping');
+
+    buyBtn.style.left = `${Math.random() * maxX}px`;
+    buyBtn.style.top  = `${Math.random() * maxY}px`;
+    buyBtn.innerText  = "CAN'T CATCH ME 🦆";
+  });
 
   setTimeout(() => {
+    buyBtn.classList.remove('escaping');
     if (!isDragging) buyBtn.innerText = normalTexts[textIndex % normalTexts.length];
-  }, 1500);
+  }, 700);
 };
 
 /* ===== EVENTS ===== */
@@ -656,6 +661,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
