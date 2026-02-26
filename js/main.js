@@ -4,6 +4,25 @@ document.getElementById('copy-ca').onclick = () => {
 };
 
 /* ===============================
+   REVEAL ON SCROLL
+================================ */
+
+const revealElements = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+
+revealElements.forEach((el) => observer.observe(el));
+
+/* ===============================
    SECRET VAULT (EASTER EGG)
 ================================ */
 function unlockVault() {
@@ -691,25 +710,4 @@ downloadBtn.addEventListener("click", () => {
   link.click();
 });
 
-
-/* ===============================
-   REVEAL ON SCROLL
-================================ */
-
-const revealElements = document.querySelectorAll(".reveal");
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
-
-revealElements.forEach((el) => observer.observe(el));
-
 }
-
