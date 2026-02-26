@@ -211,7 +211,7 @@ function randomBuy() {
   const emojis = ["🦆🔥", "🚀", "💰", "🐳", "⚡"];
 
 document.querySelector(".ticker-message").innerHTML =
-  `<strong>${name}</strong> just bought <strong>${amount} SOL</strong> of $PNLope 🚀`;
+  `<strong>${name}</strong> just bought <strong>${amount} SOL</strong> of $PNLope ${emojis}`;
 
   ticker.classList.add("show");
 
@@ -233,9 +233,10 @@ setTimeout(() => {
 const canvas = document.getElementById("pfpCanvas");
 const ctx = canvas.getContext("2d");
 
-const baseDuck = new Image();
-baseDuck.crossOrigin = "anonymous";
-baseDuck.src = "assets/Profile.png"; // change if needed
+const W = canvas.width;
+const H = canvas.height;
+
+const baseDuck = document.getElementById('baseDuck');
 
 let imageReady = false;
 
@@ -244,11 +245,8 @@ const downloadBtn = document.getElementById("downloadBtn");
 
 generateBtn.disabled = true;
 
-baseDuck.onload = function () {
-  imageReady = true;
-  generateBtn.disabled = false;
-  console.log("Duck loaded successfully");
-};
+baseDuck.complete ? (imageReady = true, generateBtn.disabled = false)
+  : baseDuck.onload = () => { imageReady = true; generateBtn.disabled = false; };
 
 /* ===============================
    UTILITIES
@@ -297,7 +295,7 @@ function drawBackground() {
   if (rarity === "common") {
     const colors = ["#87CEEB", "#FFB6C1", "#98FB98", "#FFD580"];
     ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-    ctx.fillRect(0, 0, 800, 800);
+    ctx.fillRect(0, 0, W, H);
   }
 
   if (rarity === "rare") {
@@ -305,7 +303,7 @@ function drawBackground() {
     gradient.addColorStop(0, randomColor());
     gradient.addColorStop(1, randomColor());
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 800, 800);
+    ctx.fillRect(0, 0, W, H);
   }
 
   if (rarity === "legendary") {
@@ -314,12 +312,12 @@ function drawBackground() {
     gradient.addColorStop(0.5, "#ff8c00");
     gradient.addColorStop(1, "black");
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 800, 800);
+    ctx.fillRect(0, 0, W, H);
 
     for (let i = 0; i < 40; i++) {
       ctx.fillStyle = "white";
       ctx.beginPath();
-      ctx.arc(Math.random() * 800, Math.random() * 800, Math.random() * 3, 0, Math.PI * 2);
+      ctx.arc(Math.random() * W, Math.random() * H, Math.random() * 3, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -607,7 +605,7 @@ function drawVignette() {
   vignette.addColorStop(1, "rgba(0,0,0,0.4)");
 
   ctx.fillStyle = vignette;
-  ctx.fillRect(0, 0, 800, 800);
+  ctx.fillRect(0, 0, W, H);
 
   ctx.restore();
 }
@@ -669,10 +667,3 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
-
-
-
-
-
-
-
