@@ -136,7 +136,7 @@ header p { margin-top: 0.6rem; }
 }
 
 .floating-buy {
-  position: fixed; /* start fixed */
+  position: fixed;
   bottom: 20px;
   right: 20px;
   background: #ff4d00;
@@ -149,7 +149,19 @@ header p { margin-top: 0.6rem; }
   z-index: 9999;
   cursor: grab;
   user-select: none;
-  transition: transform 0.1s ease;
+  animation: pulse 2.5s infinite;
+}
+
+.floating-buy.escaping {
+  transition: left 0.6s cubic-bezier(0.25, 1.5, 0.5, 1),
+              top  0.6s cubic-bezier(0.25, 1.5, 0.5, 1);
+}
+
+.floating-buy.dragging {
+  opacity: 0.88;
+  cursor: grabbing;
+  transform: scale(1.05);
+  transition: none; /* stays snappy while dragging */
 }
 
 @keyframes pulse {
@@ -158,16 +170,6 @@ header p { margin-top: 0.6rem; }
   100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
 }
 
-.floating-buy {
-  animation: pulse 2.5s infinite;
-}
-
-.floating-buy.dragging {
-  opacity: 0.88;
-  cursor: grabbing;
-  transform: scale(1.05);
-  transition: none;
-}
 /* === MOBILE === */
 @media (max-width: 768px) {
   .hero { grid-template-columns: 1fr; }
@@ -628,6 +630,7 @@ h2 {
 html {
   scroll-behavior: smooth;
 }
+
 
 
 
