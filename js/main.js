@@ -147,49 +147,69 @@ const escapeOnce = () => {
   const maxX = window.innerWidth  - buyBtn.offsetWidth  - padding;
   const maxY = window.innerHeight - buyBtn.offsetHeight - padding;
 
-  // Lock current position
+  // Lock starting position
   const rect = buyBtn.getBoundingClientRect();
   buyBtn.style.left   = `${rect.left}px`;
   buyBtn.style.top    = `${rect.top}px`;
   buyBtn.style.right  = 'auto';
   buyBtn.style.bottom = 'auto';
 
-  // Pick real destination
-  const realX = Math.random() * maxX;
-  const realY = Math.random() * maxY;
+  // Final destination
+  const finalX = Math.random() * maxX;
+  const finalY = Math.random() * maxY;
 
-  // Pick a fake destination — opposite-ish direction from real one
-  const fakeX = rect.left + (realX - rect.left) * 0.25 + (Math.random() - 0.5) * 120;
-  const fakeY = rect.top  + (realY - rect.top)  * 0.25 + (Math.random() - 0.5) * 120;
+  // Generate zigzag waypoints between start and final
+  const steps = 7;
+  const waypoints = [];
 
-  // Clamp fake position so it stays on screen
-  const clampedFakeX = Math.min(Math.max(padding, fakeX), maxX);
-  const clampedFakeY = Math.min(Math.max(padding, fakeY), maxY);
+  for (let i = 1; i <= steps; i++) {
+    const progress = i / (steps + 1);
+
+    // Linear interpolation toward final + perpendicular zigzag offset
+    const baseX = rect.left + (finalX - rect.left) * progress;
+    const baseY = rect.top  + (finalY - rect.top)  * progress;
+
+    // Alternate left/right zigzag — bigger swings in the middle
+    const swing = 220 * Math.sin(progress * Math.PI);
+    const side  = i % 2 === 0 ? 1 : -1;
+
+    const wx = Math.min(Math.max(padding, baseX + side * swing), maxX);
+    const wy = Math.min(Math.max(padding, baseY + (Math.random() - 0.5) * 80), maxY);
+
+    waypoints.push({ x: wx, y: wy });
+  }
+
+  // Add final destination
+  waypoints.push({ x: finalX, y: finalY });
+
+  const texts = ['👀', 'heh', 'lol', '...', 'nope', 'bye', 'lmao', "CAN'T CATCH ME 🦆"];
+  const stepDuration = 160; // ms per zigzag step
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
 
-      // ====== STEP 1: Fake move — slow & hesitant ======
-      buyBtn.style.transition = `left 0.25s ease-out, top 0.25s ease-out`;
-      buyBtn.style.left = `${clampedFakeX}px`;
-      buyBtn.style.top  = `${clampedFakeY}px`;
-      buyBtn.innerText  = '...';
+      waypoints.forEach((point, index) => {
+        setTimeout(() => {
+          const isLast = index === waypoints.length - 1;
 
-      // ====== STEP 2: Real escape — fast & bouncy ======
-      setTimeout(() => {
-        buyBtn.style.transition = `left 0.55s cubic-bezier(0.25, 1.5, 0.5, 1),
-                                   top  0.55s cubic-bezier(0.25, 1.5, 0.5, 1)`;
-        buyBtn.style.left = `${realX}px`;
-        buyBtn.style.top  = `${realY}px`;
-        buyBtn.innerText  = "CAN'T CATCH ME 🦆";
-      }, 280);
+          buyBtn.style.transition = isLast
+            ? `left 0.45s cubic-bezier(0.25, 1.4, 0.5, 1), top 0.45s cubic-bezier(0.25, 1.4, 0.5, 1)`
+            : `left ${stepDuration}ms cubic-bezier(0.4, 0, 0.2, 1), top ${stepDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
 
-      // ====== STEP 3: Clean up ======
+          buyBtn.style.left = `${point.x}px`;
+          buyBtn.style.top  = `${point.y}px`;
+
+          // Change text at each step
+          if (texts[index]) buyBtn.innerText = texts[index];
+
+        }, index * stepDuration);
+      });
+
+      // Clean up after all steps finish
       setTimeout(() => {
         buyBtn.style.transition = '';
-        buyBtn.classList.remove('escaping');
         if (!isDragging) buyBtn.innerText = normalTexts[textIndex % normalTexts.length];
-      }, 900);
+      }, waypoints.length * stepDuration + 500);
 
     });
   });
@@ -689,3 +709,4 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
