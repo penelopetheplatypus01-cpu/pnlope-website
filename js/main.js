@@ -204,7 +204,6 @@ function randomBuy() {
 
   document.querySelector(".ticker-message").innerHTML =
     `<strong>${name}</strong> just bought <strong>${amount} SOL</strong> of $PNLope ${emoji}`;
-}
 
   ticker.classList.add("show");
 
@@ -660,4 +659,5 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
