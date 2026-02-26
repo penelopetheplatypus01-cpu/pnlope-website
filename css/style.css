@@ -13,6 +13,8 @@ header {
   color: #fff7ed;
 }
 
+.header-tagline { font-weight: 900; font-size: 1.25rem; }
+
 header h1 { font-size: 6rem; margin: 0; }
 header p { margin-top: 0.6rem; }
 
@@ -626,6 +628,7 @@ h2 {
 html {
   scroll-behavior: smooth;
 }
+
 
 
 
