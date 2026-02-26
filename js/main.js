@@ -310,18 +310,17 @@ function darken(color, percent) {
 /* ===============================
    FACE METRICS
 ================================ */
-
 function getFaceMetrics() {
   const w = canvas.width;
   const h = canvas.height;
   return {
     centerX:    w * 0.5,
     centerY:    h * 0.5,
-    eyeY:       h * 0.38,
+    eyeY:       h * 0.38,  
     eyeOffsetX: w * 0.14,
-    mouthY:     h * 0.52,
-    headTopY:   h * 0.10,
-    neckY:      h * 0.60,
+    mouthY:     h * 0.50,  
+    headTopY:   h * 0.08,  
+    neckY:      h * 0.60,  
     scale: w / 800
   };
 }
@@ -562,8 +561,8 @@ function drawSunglasses(FACE) {
   ctx.translate(FACE.centerX, FACE.eyeY);
 
   const type = Math.floor(Math.random() * 7);
-  const w = 100 * FACE.scale;
-  const h = 55 * FACE.scale;
+  const w = 85 * FACE.scale;
+  const h = 42 * FACE.scale;
 
   const lens = ctx.createLinearGradient(-w, -h, w, h);
   lens.addColorStop(0, "#ffffffaa");
@@ -713,3 +712,4 @@ const observer = new IntersectionObserver(
 revealElements.forEach((el) => observer.observe(el));
 
 }
+
