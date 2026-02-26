@@ -182,7 +182,7 @@ const escapeOnce = () => {
   waypoints.push({ x: finalX, y: finalY });
 
   const texts = ['👀', 'heh', 'lol', '...', 'nope', 'bye', 'lmao', "CAN'T CATCH ME 🦆"];
-  const stepDuration = 250; 
+  const stepDuration = 600; 
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -193,7 +193,7 @@ const escapeOnce = () => {
 
 buyBtn.style.transition = isLast
   ? `left 0.45s cubic-bezier(0.25, 1.4, 0.5, 1), top 0.45s cubic-bezier(0.25, 1.4, 0.5, 1)`
-  : `left 200ms cubic-bezier(0.4, 0, 0.2, 1), top 200ms cubic-bezier(0.4, 0, 0.2, 1)`;
+  : `left 200ms cubic-bezier(0.4, 0, 0.2, 1), top 500ms cubic-bezier(0.4, 0, 0.2, 1)`;
   
 
           buyBtn.style.left = `${point.x}px`;
@@ -209,7 +209,7 @@ buyBtn.style.transition = isLast
       setTimeout(() => {
         buyBtn.style.transition = '';
         if (!isDragging) buyBtn.innerText = normalTexts[textIndex % normalTexts.length];
-      }, waypoints.length * stepDuration + 500);
+      }, waypoints.length * stepDuration + 800);
 
     });
   });
@@ -709,5 +709,6 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
