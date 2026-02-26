@@ -153,13 +153,14 @@ const escapeOnce = () => {
   buyBtn.style.right  = 'auto';
   buyBtn.style.bottom = 'auto';
 
+requestAnimationFrame(() => {
   requestAnimationFrame(() => {
     buyBtn.classList.add('escaping');
-
     buyBtn.style.left = `${Math.random() * maxX}px`;
     buyBtn.style.top  = `${Math.random() * maxY}px`;
     buyBtn.innerText  = "CAN'T CATCH ME 🦆";
   });
+});
 
   setTimeout(() => {
     buyBtn.classList.remove('escaping');
@@ -661,6 +662,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
