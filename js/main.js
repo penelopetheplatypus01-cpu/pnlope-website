@@ -396,32 +396,51 @@ function drawChain(FACE) {
   ctx.strokeStyle = gold;
   ctx.lineWidth = 18 * FACE.scale;
 
+  // Draw the chain arc
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, Math.PI);
   ctx.stroke();
 
   ctx.fillStyle = gold;
 
-  if (type === 0) ctx.arc(0, radius, 45, 0, Math.PI*2);
-  if (type === 1) ctx.fillRect(-40, radius-40, 80, 80);
-  if (type === 2) {
+  // Draw the pendant based on type
+  if (type === 0) {
     ctx.beginPath();
-    ctx.moveTo(0, radius-50);
-    ctx.lineTo(50, radius+50);
-    ctx.lineTo(-50, radius+50);
-    ctx.closePath();
-  }
-  if (type === 3) ctx.arc(0, radius, 30, 0, Math.PI*2);
-  if (type === 4) {
-    ctx.fillStyle = "#00ffff";
-    ctx.arc(0, radius, 40, 0, Math.PI*2);
-  }
-  if (type === 5) {
-    ctx.fillStyle = "#ff00ff";
-    ctx.fillRect(-60, radius-60, 120, 120);
+    ctx.arc(0, radius, 45, 0, Math.PI * 2);
+    ctx.fill();
   }
 
-  ctx.fill();
+  if (type === 1) {
+    ctx.fillRect(-40, radius - 40, 80, 80);
+  }
+
+  if (type === 2) {
+    ctx.beginPath();
+    ctx.moveTo(0, radius - 50);
+    ctx.lineTo(50, radius + 50);
+    ctx.lineTo(-50, radius + 50);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  if (type === 3) {
+    ctx.beginPath();
+    ctx.arc(0, radius, 30, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  if (type === 4) {
+    ctx.fillStyle = "#00ffff";
+    ctx.beginPath();
+    ctx.arc(0, radius, 40, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  if (type === 5) {
+    ctx.fillStyle = "#ff00ff";
+    ctx.fillRect(-60, radius - 60, 120, 120);
+  }
+
   ctx.restore();
 }
 
@@ -632,16 +651,6 @@ downloadBtn.addEventListener("click", () => {
   link.click();
 });
 
-let shineOffset = -800;
-
-function animateShine() {
-  shineOffset += 5;
-
-  if (shineOffset > 800) shineOffset = -800;
-
-  requestAnimationFrame(animateShine);
-}
-animateShine();
 
 /* REVEAL */
 const revealElements = document.querySelectorAll(".reveal");
@@ -660,6 +669,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
