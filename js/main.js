@@ -38,7 +38,9 @@ function unlockVault() {
 })();
 
 
-/* Floating Buy */
+/* ===============================
+   FLOATING BUY BUTTON
+================================ */
 const buyBtn = document.getElementById('floatingBuy');
 
 let isDragging = false;
@@ -54,7 +56,7 @@ const normalTexts = [
   'CATCH ME!'
 ];
 const draggingTexts = [
-  'DON’T DROP ME',
+  "DON'T DROP ME",
   'OK OK STOP',
   'WHY ARE YOU LIKE THIS'
 ];
@@ -62,19 +64,16 @@ let textIndex = 0;
 
 /* ===== START DRAG ===== */
 const startDrag = (e) => {
-
-  // Desktop: prevent default
   if (!e.touches) {
     e.preventDefault();
   }
 
   isDragging = true;
   dragged = false;
-  
+
   buyBtn.classList.add('dragging');
   buyBtn.style.position = 'fixed';
 
-  // random text while dragging
   buyBtn.innerText =
     draggingTexts[Math.floor(Math.random() * draggingTexts.length)];
 
@@ -116,7 +115,6 @@ const stopDrag = () => {
   isDragging = false;
   buyBtn.classList.remove('dragging');
 
-  // restore normal rotating text
   buyBtn.innerText = normalTexts[textIndex % normalTexts.length];
 };
 
@@ -129,12 +127,9 @@ setInterval(() => {
 
 /* ===== SAFE CLICK ===== */
 buyBtn.addEventListener('click', function(e) {
-
-  // Only block click on desktop if it was dragged
   if (dragged) {
     e.preventDefault();
   }
-
   dragged = false;
 });
 
@@ -147,29 +142,24 @@ const escapeOnce = () => {
   const maxX = window.innerWidth  - buyBtn.offsetWidth  - padding;
   const maxY = window.innerHeight - buyBtn.offsetHeight - padding;
 
-
   const rect = buyBtn.getBoundingClientRect();
   buyBtn.style.left   = `${rect.left}px`;
   buyBtn.style.top    = `${rect.top}px`;
   buyBtn.style.right  = 'auto';
   buyBtn.style.bottom = 'auto';
 
-
   const finalX = Math.random() * maxX;
   const finalY = Math.random() * maxY;
 
- 
   const steps = 7;
   const waypoints = [];
 
   for (let i = 1; i <= steps; i++) {
     const progress = i / (steps + 1);
 
-    
     const baseX = rect.left + (finalX - rect.left) * progress;
     const baseY = rect.top  + (finalY - rect.top)  * progress;
 
-    
     const swing = 220 * Math.sin(progress * Math.PI);
     const side  = i % 2 === 0 ? 1 : -1;
 
@@ -182,7 +172,7 @@ const escapeOnce = () => {
   waypoints.push({ x: finalX, y: finalY });
 
   const texts = ['👀', 'heh', 'lol', '...', 'nope', 'bye', 'lmao', "CAN'T CATCH ME 🦆"];
-  const stepDuration = 600; 
+  const stepDuration = 600;
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -191,20 +181,17 @@ const escapeOnce = () => {
         setTimeout(() => {
           const isLast = index === waypoints.length - 1;
 
-buyBtn.style.transition = isLast
-  ? `left 0.45s cubic-bezier(0.25, 1.4, 0.5, 1), top 0.45s cubic-bezier(0.25, 1.4, 0.5, 1)`
-  : `left 500ms cubic-bezier(0.4, 0, 0.2, 1), top 500ms cubic-bezier(0.4, 0, 0.2, 1)`;
-  
+          buyBtn.style.transition = isLast
+            ? `left 0.7s cubic-bezier(0.25, 1.4, 0.5, 1), top 0.7s cubic-bezier(0.25, 1.4, 0.5, 1)`
+            : `left 500ms cubic-bezier(0.4, 0, 0.2, 1), top 500ms cubic-bezier(0.4, 0, 0.2, 1)`;
 
           buyBtn.style.left = `${point.x}px`;
           buyBtn.style.top  = `${point.y}px`;
-
 
           if (texts[index]) buyBtn.innerText = texts[index];
 
         }, index * stepDuration);
       });
-
 
       setTimeout(() => {
         buyBtn.style.transition = '';
@@ -222,7 +209,7 @@ buyBtn.addEventListener('touchstart', startDrag);
 document.addEventListener('mousemove', drag);
 document.addEventListener('touchmove', function(e) {
   if (isDragging) {
-    e.preventDefault(); // stop scroll
+    e.preventDefault();
     drag(e);
   }
 }, { passive: false });
@@ -232,9 +219,17 @@ document.addEventListener('touchend', stopDrag);
 
 /* Hover / first tap triggers run-away */
 buyBtn.addEventListener('mouseenter', escapeOnce);
-buyBtn.addEventListener('touchstart', escapeOnce, { once: true });
+buyBtn.addEventListener('touchend', (e) => {
+  if (!dragged && !hasEscaped) {
+    e.preventDefault();
+    escapeOnce();
+  }
+}, { once: true });
 
-/* FAKE BUYS */
+
+/* ===============================
+   FAKE BUYS
+================================ */
 const names = [
   "DegenWhale",
   "0xLord",
@@ -247,29 +242,32 @@ const names = [
   "Elon Musk"
 ];
 
-
-/* RANDOM BUYS */
+const emojis = ["🦆🔥", "🚀", "💰", "🐳", "⚡"];
 const ticker = document.getElementById("buyTicker");
 
 function randomBuy() {
   const name = names[Math.floor(Math.random() * names.length)];
   const amount = (Math.random() * 4 + 0.1).toFixed(2);
-  const emojis = ["🦆🔥", "🚀", "💰", "🐳", "⚡"];
   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
 
   document.querySelector(".ticker-message").innerHTML =
     `<strong>${name}</strong> just bought <strong>${amount} SOL</strong> of $PNLope ${emoji}`;
 
-  ticker.classList.add("show");        
+  ticker.classList.add("show");
 
   setTimeout(() => {
     ticker.classList.remove("show");
   }, 3500);
-}                                       
+}
+
+setTimeout(() => {
+  randomBuy();
+  setInterval(randomBuy, 5500);
+}, 2000);
 
 
 /* ===============================
-   PROFILE GENERATOR (STABLE)
+   PROFILE GENERATOR
 ================================ */
 
 const canvas = document.getElementById("pfpCanvas");
@@ -287,8 +285,10 @@ const downloadBtn = document.getElementById("downloadBtn");
 
 generateBtn.disabled = true;
 
-baseDuck.complete ? (imageReady = true, generateBtn.disabled = false)
+baseDuck.complete
+  ? (imageReady = true, generateBtn.disabled = false)
   : baseDuck.onload = () => { imageReady = true; generateBtn.disabled = false; };
+
 
 /* ===============================
    UTILITIES
@@ -306,21 +306,26 @@ function darken(color, percent) {
   return color.replace("55%", `${55 - percent}%`);
 }
 
+
+/* ===============================
+   FACE METRICS
+================================ */
+
 function getFaceMetrics() {
   const w = canvas.width;
   const h = canvas.height;
-
   return {
-    centerX: w * 0.5,
-    centerY: h * 0.5,
-    eyeY: h * 0.45,
+    centerX:    w * 0.5,
+    centerY:    h * 0.5,
+    eyeY:       h * 0.38,
     eyeOffsetX: w * 0.14,
-    mouthY: h * 0.62,
-    headTopY: h * 0.28,
-    neckY: h * 0.72,
+    mouthY:     h * 0.52,
+    headTopY:   h * 0.10,
+    neckY:      h * 0.60,
     scale: w / 800
   };
 }
+
 
 /* ===============================
    BACKGROUND
@@ -341,7 +346,7 @@ function drawBackground() {
   }
 
   if (rarity === "rare") {
-    const gradient = ctx.createLinearGradient(0, 0, 800, 800);
+    const gradient = ctx.createLinearGradient(0, 0, W, H);
     gradient.addColorStop(0, randomColor());
     gradient.addColorStop(1, randomColor());
     ctx.fillStyle = gradient;
@@ -349,7 +354,7 @@ function drawBackground() {
   }
 
   if (rarity === "legendary") {
-    const gradient = ctx.createRadialGradient(400, 400, 50, 400, 400, 600);
+    const gradient = ctx.createRadialGradient(W/2, H/2, 50, W/2, H/2, 600);
     gradient.addColorStop(0, "gold");
     gradient.addColorStop(0.5, "#ff8c00");
     gradient.addColorStop(1, "black");
@@ -367,13 +372,15 @@ function drawBackground() {
   return rarity;
 }
 
+
 /* ===============================
    BASE IMAGE
 ================================ */
 
 function drawDuck() {
-  ctx.drawImage(baseDuck, 0, 0, 800, 800);
+  ctx.drawImage(baseDuck, 0, 0, W, H);
 }
+
 
 /* ===============================
    JACKET
@@ -388,7 +395,6 @@ function drawJacket(FACE) {
 
   const baseColor = randomColor();
 
-  // Main body gradient (light from top-left)
   const grad = ctx.createLinearGradient(-width/2, -height, width/2, height);
   grad.addColorStop(0, lighten(baseColor, 25));
   grad.addColorStop(0.5, baseColor);
@@ -397,7 +403,6 @@ function drawJacket(FACE) {
   ctx.fillStyle = grad;
   ctx.fillRect(-width/2, -120, width, height);
 
-  // Cloth folds
   ctx.globalAlpha = 0.25;
   for (let i = 0; i < 25; i++) {
     const x = (Math.random() - 0.5) * width;
@@ -410,12 +415,12 @@ function drawJacket(FACE) {
   }
   ctx.globalAlpha = 1;
 
-  // Collar
   ctx.fillStyle = darken(baseColor, 20);
   ctx.fillRect(-120, -120, 240, 120);
 
   ctx.restore();
 }
+
 
 /* ===============================
    CHAIN
@@ -425,7 +430,7 @@ function drawChain(FACE) {
   ctx.save();
   ctx.translate(FACE.centerX, FACE.neckY);
 
-  const radius = 170 * FACE.scale;
+  const radius = 120 * FACE.scale;
   const type = Math.floor(Math.random() * 6);
 
   const gold = ctx.createLinearGradient(0, -radius, 0, radius);
@@ -436,14 +441,12 @@ function drawChain(FACE) {
   ctx.strokeStyle = gold;
   ctx.lineWidth = 18 * FACE.scale;
 
-  // Draw the chain arc
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, Math.PI);
   ctx.stroke();
 
   ctx.fillStyle = gold;
 
-  // Draw the pendant based on type
   if (type === 0) {
     ctx.beginPath();
     ctx.arc(0, radius, 45, 0, Math.PI * 2);
@@ -484,6 +487,7 @@ function drawChain(FACE) {
   ctx.restore();
 }
 
+
 /* ===============================
    HAT
 ================================ */
@@ -507,29 +511,29 @@ function drawHat(FACE) {
     ctx.fill();
   }
 
-  if (type === 0) shadedDome(220 * scale); // cap
-  if (type === 1) { // top hat
+  if (type === 0) shadedDome(220 * scale);
+  if (type === 1) {
     ctx.fillStyle = color;
     ctx.fillRect(-80, 0, 160, 180);
     ctx.fillRect(-160, 180, 320, 35);
   }
-  if (type === 2) { // cowboy
+  if (type === 2) {
     ctx.fillStyle = color;
     ctx.fillRect(-320, 120, 640, 40);
     shadedDome(200 * scale);
   }
-  if (type === 3) { // beanie
+  if (type === 3) {
     ctx.fillStyle = color;
     ctx.fillRect(-160, 60, 320, 120);
   }
-  if (type === 4) { // bucket
+  if (type === 4) {
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.ellipse(0, 120, 260, 170, 0, Math.PI, 0);
     ctx.fill();
   }
-  if (type === 5) shadedDome(260 * scale); // oversized dome
-  if (type === 6) { // crown
+  if (type === 5) shadedDome(260 * scale);
+  if (type === 6) {
     ctx.fillStyle = "#ffd700";
     ctx.fillRect(-200, 80, 400, 140);
     for (let i = -180; i <= 180; i += 90) {
@@ -540,13 +544,14 @@ function drawHat(FACE) {
       ctx.fill();
     }
   }
-  if (type === 7) { // visor
+  if (type === 7) {
     ctx.fillStyle = color;
     ctx.fillRect(-180, 100, 360, 45);
   }
 
   ctx.restore();
 }
+
 
 /* ===============================
    SUNGLASSES
@@ -596,6 +601,7 @@ function drawSunglasses(FACE) {
   ctx.restore();
 }
 
+
 /* ===============================
    CIGAR
 ================================ */
@@ -613,11 +619,9 @@ function drawCigar(FACE) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, -12, length, 28);
 
-  // ash tip
   ctx.fillStyle = "#ccc";
   ctx.fillRect(length - 10, -12, 10, 28);
 
-  // ember glow
   const ember = ctx.createRadialGradient(length, 2, 5, length, 2, 25);
   ember.addColorStop(0, "yellow");
   ember.addColorStop(0.5, "red");
@@ -631,6 +635,7 @@ function drawCigar(FACE) {
   ctx.restore();
 }
 
+
 /* ===============================
    VIGNETTE
 ================================ */
@@ -638,11 +643,7 @@ function drawCigar(FACE) {
 function drawVignette() {
   ctx.save();
 
-  const vignette = ctx.createRadialGradient(
-    400, 400, 200,
-    400, 400, 600
-  );
-
+  const vignette = ctx.createRadialGradient(W/2, H/2, 200, W/2, H/2, 600);
   vignette.addColorStop(0, "rgba(0,0,0,0)");
   vignette.addColorStop(1, "rgba(0,0,0,0.4)");
 
@@ -652,6 +653,7 @@ function drawVignette() {
   ctx.restore();
 }
 
+
 /* ===============================
    GENERATE
 ================================ */
@@ -659,30 +661,25 @@ function drawVignette() {
 function generatePFP() {
   if (!imageReady) return;
 
-  // 🔥 Prevent transform stacking bug
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, W, H);
 
   drawBackground();
   drawDuck();
 
-function getFaceMetrics() {
-  const w = canvas.width;
-  const h = canvas.height;
-  return {
-    centerX:    w * 0.5,
-    centerY:    h * 0.5,
-    eyeY:       h * 0.38,  
-    eyeOffsetX: w * 0.14,
-    mouthY:     h * 0.52,
-    headTopY:   h * 0.10,
-    neckY:      h * 0.60,
-    scale: w / 800
-  };
+  const FACE = getFaceMetrics();
+
+  drawJacket(FACE);
+  drawChain(FACE);
+  drawHat(FACE);
+  drawSunglasses(FACE);
+  drawCigar(FACE);
+
+  drawVignette();
 }
 
 generateBtn.addEventListener("click", generatePFP);
+
 
 /* ===============================
    DOWNLOAD
@@ -696,7 +693,10 @@ downloadBtn.addEventListener("click", () => {
 });
 
 
-/* REVEAL */
+/* ===============================
+   REVEAL ON SCROLL
+================================ */
+
 const revealElements = document.querySelectorAll(".reveal");
 
 const observer = new IntersectionObserver(
@@ -707,10 +707,7 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  {
-    threshold: 0.15,
-  }
+  { threshold: 0.15 }
 );
 
 revealElements.forEach((el) => observer.observe(el));
-
