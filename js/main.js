@@ -345,18 +345,38 @@ function drawDuck() {
 
 function drawJacket(FACE) {
   ctx.save();
-  ctx.translate(FACE.centerX, FACE.neckY + 80);
+  ctx.translate(FACE.centerX, FACE.neckY + 90);
 
-  const width = 600 * FACE.scale;
-  const height = 300 * FACE.scale;
+  const width = 620 * FACE.scale;
+  const height = 340 * FACE.scale;
 
-  const base = ctx.createLinearGradient(0, -height, 0, height);
-  const color = randomColor();
-  base.addColorStop(0, lighten(color, 30));
-  base.addColorStop(1, darken(color, 30));
+  const baseColor = randomColor();
 
-  ctx.fillStyle = base;
-  ctx.fillRect(-width / 2, -100, width, height);
+  // Main body gradient (light from top-left)
+  const grad = ctx.createLinearGradient(-width/2, -height, width/2, height);
+  grad.addColorStop(0, lighten(baseColor, 25));
+  grad.addColorStop(0.5, baseColor);
+  grad.addColorStop(1, darken(baseColor, 35));
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(-width/2, -120, width, height);
+
+  // Cloth folds
+  ctx.globalAlpha = 0.25;
+  for (let i = 0; i < 25; i++) {
+    const x = (Math.random() - 0.5) * width;
+    const y = (Math.random() - 0.5) * height;
+    const fold = ctx.createLinearGradient(x, y, x + 80, y + 40);
+    fold.addColorStop(0, "rgba(0,0,0,0.6)");
+    fold.addColorStop(1, "transparent");
+    ctx.fillStyle = fold;
+    ctx.fillRect(x, y, 120, 60);
+  }
+  ctx.globalAlpha = 1;
+
+  // Collar
+  ctx.fillStyle = darken(baseColor, 20);
+  ctx.fillRect(-120, -120, 240, 120);
 
   ctx.restore();
 }
@@ -370,6 +390,7 @@ function drawChain(FACE) {
   ctx.translate(FACE.centerX, FACE.neckY);
 
   const radius = 170 * FACE.scale;
+  const type = Math.floor(Math.random() * 6);
 
   const gold = ctx.createLinearGradient(0, -radius, 0, radius);
   gold.addColorStop(0, "#fff8c6");
@@ -385,10 +406,26 @@ function drawChain(FACE) {
 
   ctx.fillStyle = gold;
 
-  ctx.beginPath();
-  ctx.arc(0, radius, 45 * FACE.scale, 0, Math.PI * 2);
-  ctx.fill();
+  if (type === 0) ctx.arc(0, radius, 45, 0, Math.PI*2);
+  if (type === 1) ctx.fillRect(-40, radius-40, 80, 80);
+  if (type === 2) {
+    ctx.beginPath();
+    ctx.moveTo(0, radius-50);
+    ctx.lineTo(50, radius+50);
+    ctx.lineTo(-50, radius+50);
+    ctx.closePath();
+  }
+  if (type === 3) ctx.arc(0, radius, 30, 0, Math.PI*2);
+  if (type === 4) {
+    ctx.fillStyle = "#00ffff";
+    ctx.arc(0, radius, 40, 0, Math.PI*2);
+  }
+  if (type === 5) {
+    ctx.fillStyle = "#ff00ff";
+    ctx.fillRect(-60, radius-60, 120, 120);
+  }
 
+  ctx.fill();
   ctx.restore();
 }
 
@@ -398,14 +435,60 @@ function drawChain(FACE) {
 
 function drawHat(FACE) {
   ctx.save();
-  ctx.translate(FACE.centerX, FACE.headTopY - 30);
+  ctx.translate(FACE.centerX, FACE.headTopY - 40);
 
   const scale = FACE.scale * 1.2;
-  ctx.fillStyle = randomColor();
+  const type = Math.floor(Math.random() * 8);
+  const color = randomColor();
 
-  ctx.beginPath();
-  ctx.arc(0, 100, 220 * scale, Math.PI, 0);
-  ctx.fill();
+  function shadedDome(radius) {
+    const grad = ctx.createRadialGradient(-60, -40, 20, 0, 80, radius);
+    grad.addColorStop(0, "#ffffffaa");
+    grad.addColorStop(0.5, color);
+    grad.addColorStop(1, darken(color, 40));
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(0, 120, radius, Math.PI, 0);
+    ctx.fill();
+  }
+
+  if (type === 0) shadedDome(220 * scale); // cap
+  if (type === 1) { // top hat
+    ctx.fillStyle = color;
+    ctx.fillRect(-120, 0, 240, 200);
+    ctx.fillRect(-240, 200, 480, 40);
+  }
+  if (type === 2) { // cowboy
+    ctx.fillStyle = color;
+    ctx.fillRect(-320, 120, 640, 40);
+    shadedDome(200 * scale);
+  }
+  if (type === 3) { // beanie
+    ctx.fillStyle = color;
+    ctx.fillRect(-240, 60, 480, 160);
+  }
+  if (type === 4) { // bucket
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.ellipse(0, 120, 260, 170, 0, Math.PI, 0);
+    ctx.fill();
+  }
+  if (type === 5) shadedDome(260 * scale); // oversized dome
+  if (type === 6) { // crown
+    ctx.fillStyle = "#ffd700";
+    ctx.fillRect(-200, 80, 400, 140);
+    for (let i = -180; i <= 180; i += 90) {
+      ctx.beginPath();
+      ctx.moveTo(i, 80);
+      ctx.lineTo(i + 45, 0);
+      ctx.lineTo(i + 90, 80);
+      ctx.fill();
+    }
+  }
+  if (type === 7) { // visor
+    ctx.fillStyle = color;
+    ctx.fillRect(-260, 120, 520, 50);
+  }
 
   ctx.restore();
 }
@@ -418,19 +501,42 @@ function drawSunglasses(FACE) {
   ctx.save();
   ctx.translate(FACE.centerX, FACE.eyeY);
 
-  const w = 130 * FACE.scale;
+  const type = Math.floor(Math.random() * 7);
+  const w = 140 * FACE.scale;
   const h = 80 * FACE.scale;
 
-  const metal = ctx.createLinearGradient(-w, -h, w, h);
-  metal.addColorStop(0, "#fff");
-  metal.addColorStop(0.3, "#999");
-  metal.addColorStop(0.6, "#000");
-  metal.addColorStop(1, "#fff");
+  const lens = ctx.createLinearGradient(-w, -h, w, h);
+  lens.addColorStop(0, "#ffffffaa");
+  lens.addColorStop(0.3, "#222");
+  lens.addColorStop(0.7, "#000");
+  lens.addColorStop(1, "#ffffff88");
 
-  ctx.fillStyle = metal;
+  ctx.fillStyle = lens;
 
-  ctx.fillRect(-w - 20, -h / 2, w, h);
-  ctx.fillRect(20, -h / 2, w, h);
+  if (type === 0) {
+    ctx.fillRect(-w - 30, -h/2, w, h);
+    ctx.fillRect(30, -h/2, w, h);
+  }
+  if (type === 1) {
+    ctx.beginPath();
+    ctx.ellipse(-w/1.2, 0, w/1.5, h/2, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(w/1.2, 0, w/1.5, h/2, 0, 0, Math.PI*2);
+    ctx.fill();
+  }
+  if (type === 2) ctx.fillRect(-w, -h/3, w*2, h/1.5);
+  if (type === 3) {
+    ctx.beginPath();
+    ctx.arc(-w/1.2, 0, h/1.2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(w/1.2, 0, h/1.2, 0, Math.PI*2);
+    ctx.fill();
+  }
+  if (type === 4) ctx.fillRect(-w, -h/2, w*2, h);
+  if (type === 5) ctx.fillRect(-w/2, -h/2, w, h);
+  if (type === 6) ctx.fillRect(-w*1.2, -h/2, w*2.4, h);
 
   ctx.restore();
 }
@@ -441,12 +547,31 @@ function drawSunglasses(FACE) {
 
 function drawCigar(FACE) {
   ctx.save();
-  ctx.translate(FACE.centerX + 180 * FACE.scale, FACE.mouthY);
+  ctx.translate(FACE.centerX + 190 * FACE.scale, FACE.mouthY);
 
-  const length = 120 * FACE.scale;
+  const length = 140 * FACE.scale;
 
-  ctx.fillStyle = "#7a4b25";
-  ctx.fillRect(0, -10, length, 25);
+  const grad = ctx.createLinearGradient(0, 0, length, 0);
+  grad.addColorStop(0, "#8b5a2b");
+  grad.addColorStop(1, "#3e2412");
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, -12, length, 28);
+
+  // ash tip
+  ctx.fillStyle = "#ccc";
+  ctx.fillRect(length - 10, -12, 10, 28);
+
+  // ember glow
+  const ember = ctx.createRadialGradient(length, 2, 5, length, 2, 25);
+  ember.addColorStop(0, "yellow");
+  ember.addColorStop(0.5, "red");
+  ember.addColorStop(1, "transparent");
+
+  ctx.fillStyle = ember;
+  ctx.beginPath();
+  ctx.arc(length, 2, 25, 0, Math.PI*2);
+  ctx.fill();
 
   ctx.restore();
 }
@@ -539,6 +664,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
