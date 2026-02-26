@@ -252,6 +252,16 @@ function randomColor() {
   return `hsl(${Math.random()*360}, 70%, 55%)`;
 }
 
+const FACE = {
+  centerX: 400,
+  centerY: 400,
+  eyeY: 360,
+  eyeOffsetX: 120,
+  mouthY: 490,
+  headTopY: 230,
+  neckY: 600
+};
+
 function drawBackground() {
 
   const roll = Math.random();
@@ -302,7 +312,8 @@ function drawJacket() {
   const style = Math.floor(Math.random() * 3);
 
   ctx.save();
-  ctx.translate(400, 620);
+  ctx.translate(FACE.centerX, 680);
+  ctx.fillRect(-280, -80, 560, 250);
   addShadow(35);
 
   // gradient for 3D fabric
@@ -348,115 +359,99 @@ function drawJacket() {
 }
 
 function drawChain() {
-  if (Math.random() > 0.6) return;
+  if (Math.random() > 0.7) return;
 
   ctx.save();
+  ctx.translate(FACE.centerX, FACE.neckY);
   addShadow(25);
 
-  const gradient = ctx.createLinearGradient(0, 500, 0, 650);
-  gradient.addColorStop(0, "#fff4a3");
-  gradient.addColorStop(0.5, "gold");
-  gradient.addColorStop(1, "#b8860b");
+  // Gold chain
+  const gold = ctx.createLinearGradient(0, -50, 0, 200);
+  gold.addColorStop(0, "#fff4a3");
+  gold.addColorStop(0.5, "#ffd700");
+  gold.addColorStop(1, "#b8860b");
 
-  ctx.strokeStyle = gradient;
-  ctx.lineWidth = 28;
+  ctx.strokeStyle = gold;
+  ctx.lineWidth = 18;
 
   ctx.beginPath();
-  ctx.arc(400, 600, 180, 0, Math.PI);
+  ctx.arc(0, 0, 170, 0, Math.PI);
   ctx.stroke();
+
+  // Pendant
+  ctx.fillStyle = gold;
+  ctx.beginPath();
+  ctx.arc(0, 170, 45, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Inner shine
+  ctx.fillStyle = "rgba(255,255,255,0.5)";
+  ctx.beginPath();
+  ctx.arc(-10, 150, 15, 0, Math.PI * 2);
+  ctx.fill();
 
   clearShadow();
   ctx.restore();
 }
 
 function drawHat() {
-  if (Math.random() > 0.7) return;
-
-  const type = Math.floor(Math.random() * 3);
-  const tilt = (Math.random() - 0.5) * 0.15;
+  if (Math.random() > 0.8) return;
 
   ctx.save();
-  ctx.translate(400, 210);
-  ctx.rotate(tilt);
+  ctx.translate(FACE.centerX, FACE.headTopY);
   addShadow(30);
 
-  if (type === 0) {
-    // Fedora
-    ctx.fillStyle = randomColor();
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 220, 110, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillRect(-250, 60, 500, 40);
-  }
+  const gradient = ctx.createLinearGradient(0, -100, 0, 100);
+  gradient.addColorStop(0, randomColor());
+  gradient.addColorStop(1, "#222");
 
-  if (type === 1) {
-    // Beanie
-    ctx.fillStyle = randomColor();
-    ctx.beginPath();
-    ctx.arc(0, 40, 200, Math.PI, 0);
-    ctx.fill();
-  }
+  ctx.fillStyle = gradient;
 
-  if (type === 2) {
-    // Crown
-    ctx.fillStyle = "gold";
-    ctx.fillRect(-180, 0, 360, 90);
+  ctx.beginPath();
+  ctx.arc(0, 60, 220, Math.PI, 0);
+  ctx.fill();
 
-    ctx.beginPath();
-    ctx.moveTo(-180, 0);
-    ctx.lineTo(-120, -80);
-    ctx.lineTo(-60, 0);
-    ctx.lineTo(0, -80);
-    ctx.lineTo(60, 0);
-    ctx.lineTo(120, -80);
-    ctx.lineTo(180, 0);
-    ctx.fill();
-  }
+  ctx.fillRect(-250, 110, 500, 40);
 
   clearShadow();
   ctx.restore();
 }
 
 function drawSunglasses() {
-  if (Math.random() > 0.8) return;
+  if (Math.random() > 0.85) return;
 
   const style = Math.floor(Math.random() * 3);
-  const tilt = (Math.random() - 0.5) * 0.2;
+  const tilt = (Math.random() - 0.5) * 0.1;
 
   ctx.save();
-  ctx.translate(400, 365);
+  ctx.translate(FACE.centerX, FACE.eyeY);
   ctx.rotate(tilt);
+  addShadow(20);
 
-  addShadow(15);
+  const lensGradient = ctx.createLinearGradient(-80, -40, 80, 40);
+  lensGradient.addColorStop(0, "#222");
+  lensGradient.addColorStop(1, "#000");
+
+  ctx.fillStyle = lensGradient;
 
   if (style === 0) {
-    // Classic
-    ctx.fillStyle = "#111";
-    ctx.fillRect(-150, -40, 120, 80);
-    ctx.fillRect(30, -40, 120, 80);
-    ctx.fillRect(-30, -10, 60, 20);
+    ctx.fillRect(-180, -40, 140, 80);
+    ctx.fillRect(40, -40, 140, 80);
+    ctx.fillRect(-40, -10, 80, 20);
   }
 
   if (style === 1) {
-    // Round 3D
-    const gradient = ctx.createRadialGradient(0,0,10,0,0,70);
-    gradient.addColorStop(0,"#222");
-    gradient.addColorStop(1,"#000");
-
-    ctx.fillStyle = gradient;
     ctx.beginPath();
-    ctx.arc(-90, 0, 60, 0, Math.PI*2);
+    ctx.arc(-90, 0, 60, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.beginPath();
-    ctx.arc(90, 0, 60, 0, Math.PI*2);
+    ctx.arc(90, 0, 60, 0, Math.PI * 2);
     ctx.fill();
   }
 
   if (style === 2) {
-    // Deal with it style
-    ctx.fillStyle = "black";
-    ctx.fillRect(-170, -30, 340, 60);
+    ctx.fillRect(-200, -35, 400, 70);
   }
 
   clearShadow();
@@ -464,32 +459,17 @@ function drawSunglasses() {
 }
 
 function drawCigar() {
-  if (Math.random() > 0.75) return;
-
-  const type = Math.floor(Math.random() * 3);
+  if (Math.random() > 0.8) return;
 
   ctx.save();
-  ctx.translate(580, 490);
+  ctx.translate(FACE.centerX + 160, FACE.mouthY);
   addShadow(10);
 
-  if (type === 0) {
-    ctx.fillStyle = "#5c3b1e";
-    ctx.fillRect(0, 0, 120, 28);
-    ctx.fillStyle = "red";
-    ctx.fillRect(105, 0, 15, 28);
-  }
+  ctx.fillStyle = "#5c3b1e";
+  ctx.fillRect(0, 0, 100, 22);
 
-  if (type === 1) {
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, 80, 18);
-  }
-
-  if (type === 2) {
-    ctx.fillStyle = "hotpink";
-    ctx.beginPath();
-    ctx.arc(40, 10, 20, 0, Math.PI * 2);
-    ctx.fill();
-  }
+  ctx.fillStyle = "red";
+  ctx.fillRect(85, 0, 15, 22);
 
   clearShadow();
   ctx.restore();
@@ -568,6 +548,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
