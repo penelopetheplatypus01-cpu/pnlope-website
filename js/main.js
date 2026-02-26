@@ -583,16 +583,17 @@ function drawDuck() {
 
 function generatePFP() {
 
-  ctx.clearRect(0, 0, 800, 800);
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const rarity = drawBackground();  // BACKGROUND FIRST
-  const FACE = getFaceMetrics();
-  drawDuck(FACE);       // your base image
-  drawJacket(FACE);     // jacket under chain
-  drawChain(FACE);
-  drawHat(FACE);
-  drawSunglasses(FACE);
-  drawCigar(FACE);
+drawBackground();
+drawBaseImage();        // Profile.png
+const FACE = getFaceMetrics();
+
+drawJacket(FACE);
+drawChain(FACE);
+drawHat(FACE);
+drawSunglasses(FACE);
+drawCigar(FACE);
   
   console.log("Background rarity:", rarity);
 }
@@ -639,4 +640,5 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
