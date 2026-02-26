@@ -379,7 +379,7 @@ function drawChain(FACE) {
 }
 
 
-function drawHat() {
+function drawHat(FACE) {
   if (Math.random() > 0.8) return;
 
   ctx.save();
@@ -436,7 +436,7 @@ function drawSunglasses(FACE) {
   ctx.restore();
 }
 
-function drawCigar() {
+function drawCigar(FACE) {
   if (Math.random() > 0.8) return;
 
   ctx.save();
@@ -526,6 +526,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
