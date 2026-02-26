@@ -230,26 +230,44 @@ setTimeout(() => {
 }, 2000);
 
 
-/* Profile Generator */
+/* ===============================
+   PROFILE GENERATOR (STABLE)
+================================ */
+
 const canvas = document.getElementById("pfpCanvas");
 const ctx = canvas.getContext("2d");
+
 const baseDuck = new Image();
-baseDuck.src = "assets/Profile.png"; // adjust if needed
+baseDuck.crossOrigin = "anonymous";
+baseDuck.src = "assets/Profile.png"; // change if needed
 
 let imageReady = false;
-
-baseDuck.onload = function() {
-  imageReady = true;
-  console.log("Duck loaded successfully");
-};
 
 const generateBtn = document.getElementById("generateBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 
-baseDuck.crossOrigin = "anonymous";
+generateBtn.disabled = true;
+
+baseDuck.onload = function () {
+  imageReady = true;
+  generateBtn.disabled = false;
+  console.log("Duck loaded successfully");
+};
+
+/* ===============================
+   UTILITIES
+================================ */
 
 function randomColor() {
-  return `hsl(${Math.random()*360}, 70%, 55%)`;
+  return `hsl(${Math.random() * 360}, 70%, 55%)`;
+}
+
+function lighten(color, percent) {
+  return color.replace("55%", `${55 + percent}%`);
+}
+
+function darken(color, percent) {
+  return color.replace("55%", `${55 - percent}%`);
 }
 
 function getFaceMetrics() {
@@ -268,8 +286,11 @@ function getFaceMetrics() {
   };
 }
 
-function drawBackground() {
+/* ===============================
+   BACKGROUND
+================================ */
 
+function drawBackground() {
   const roll = Math.random();
   let rarity;
 
@@ -299,7 +320,6 @@ function drawBackground() {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 800, 800);
 
-    // sparkle effect
     for (let i = 0; i < 40; i++) {
       ctx.fillStyle = "white";
       ctx.beginPath();
@@ -311,61 +331,41 @@ function drawBackground() {
   return rarity;
 }
 
-function drawJacket(FACE) {
+/* ===============================
+   BASE IMAGE
+================================ */
 
+function drawDuck() {
+  ctx.drawImage(baseDuck, 0, 0, 800, 800);
+}
+
+/* ===============================
+   JACKET
+================================ */
+
+function drawJacket(FACE) {
   ctx.save();
   ctx.translate(FACE.centerX, FACE.neckY + 80);
 
   const width = 600 * FACE.scale;
   const height = 300 * FACE.scale;
 
-  // Base gradient
   const base = ctx.createLinearGradient(0, -height, 0, height);
   const color = randomColor();
   base.addColorStop(0, lighten(color, 30));
-  base.addColorStop(1, darken(color, 40));
+  base.addColorStop(1, darken(color, 30));
 
   ctx.fillStyle = base;
-  ctx.fillRect(-width/2, -100, width, height);
-
-  // Wrinkle shading
-  ctx.globalAlpha = 0.25;
-
-  for (let i = 0; i < 20; i++) {
-    const x = (Math.random() - 0.5) * width;
-    const y = (Math.random() - 0.5) * height;
-
-    const wrinkle = ctx.createLinearGradient(
-      x, y,
-      x + 80, y + 40
-    );
-
-    wrinkle.addColorStop(0, "rgba(0,0,0,0.5)");
-    wrinkle.addColorStop(1, "transparent");
-
-    ctx.fillStyle = wrinkle;
-    ctx.fillRect(x, y, 120, 60);
-  }
-
-  ctx.globalAlpha = 1;
-
-  // Stitch lines
-  ctx.strokeStyle = "rgba(255,255,255,0.3)";
-  ctx.lineWidth = 2;
-
-  for (let i = -250; i <= 250; i += 35) {
-    ctx.beginPath();
-    ctx.moveTo(i, -60);
-    ctx.lineTo(i, 180);
-    ctx.stroke();
-  }
+  ctx.fillRect(-width / 2, -100, width, height);
 
   ctx.restore();
 }
 
-function drawChain(FACE) {
+/* ===============================
+   CHAIN
+================================ */
 
-  const type = Math.floor(Math.random() * 4);
+function drawChain(FACE) {
   ctx.save();
   ctx.translate(FACE.centerX, FACE.neckY);
 
@@ -385,93 +385,36 @@ function drawChain(FACE) {
 
   ctx.fillStyle = gold;
 
-  // Pendant variations
-  if (type === 0) {
-    ctx.beginPath();
-    ctx.arc(0, radius, 45 * FACE.scale, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  if (type === 1) {
-    ctx.fillRect(-40, radius - 40, 80, 80);
-  }
-
-  if (type === 2) {
-    ctx.beginPath();
-    ctx.moveTo(0, radius - 50);
-    ctx.lineTo(40, radius + 40);
-    ctx.lineTo(-40, radius + 40);
-    ctx.closePath();
-    ctx.fill();
-  }
-
-  if (type === 3) {
-    ctx.beginPath();
-    ctx.arc(0, radius, 30 * FACE.scale, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "#00ffff";
-    ctx.beginPath();
-    ctx.arc(0, radius, 15 * FACE.scale, 0, Math.PI * 2);
-    ctx.fill();
-  }
+  ctx.beginPath();
+  ctx.arc(0, radius, 45 * FACE.scale, 0, Math.PI * 2);
+  ctx.fill();
 
   ctx.restore();
 }
 
+/* ===============================
+   HAT
+================================ */
+
 function drawHat(FACE) {
-
-  const type = Math.floor(Math.random() * 5);
-
   ctx.save();
   ctx.translate(FACE.centerX, FACE.headTopY - 30);
 
   const scale = FACE.scale * 1.2;
+  ctx.fillStyle = randomColor();
 
-  if (type === 0) { // Dome cap
-    const grad = ctx.createRadialGradient(-50, -40, 20, 0, 0, 200);
-    grad.addColorStop(0, "#fff");
-    grad.addColorStop(1, randomColor());
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(0, 100, 220 * scale, Math.PI, 0);
-    ctx.fill();
-  }
-
-  if (type === 1) { // Beanie
-    ctx.fillStyle = randomColor();
-    ctx.fillRect(-220 * scale, 40, 440 * scale, 140 * scale);
-  }
-
-  if (type === 2) { // Cowboy brim
-    ctx.fillStyle = randomColor();
-    ctx.fillRect(-300 * scale, 120, 600 * scale, 40);
-    ctx.beginPath();
-    ctx.arc(0, 120, 200 * scale, Math.PI, 0);
-    ctx.fill();
-  }
-
-  if (type === 3) { // Top hat
-    ctx.fillStyle = randomColor();
-    ctx.fillRect(-120 * scale, 0, 240 * scale, 200 * scale);
-    ctx.fillRect(-220 * scale, 200 * scale, 440 * scale, 40);
-  }
-
-  if (type === 4) { // Bucket hat
-    ctx.fillStyle = randomColor();
-    ctx.beginPath();
-    ctx.ellipse(0, 120, 240 * scale, 160 * scale, 0, Math.PI, 0);
-    ctx.fill();
-  }
+  ctx.beginPath();
+  ctx.arc(0, 100, 220 * scale, Math.PI, 0);
+  ctx.fill();
 
   ctx.restore();
 }
 
+/* ===============================
+   SUNGLASSES
+================================ */
 
 function drawSunglasses(FACE) {
-
-  const type = Math.floor(Math.random() * 5);
-
   ctx.save();
   ctx.translate(FACE.centerX, FACE.eyeY);
 
@@ -486,111 +429,62 @@ function drawSunglasses(FACE) {
 
   ctx.fillStyle = metal;
 
-  if (type === 0) {
-    ctx.fillRect(-w - 20, -h/2, w, h);
-    ctx.fillRect(20, -h/2, w, h);
-  }
-
-  if (type === 1) {
-    ctx.beginPath();
-    ctx.ellipse(-w/1.2, 0, w/1.5, h/2, 0, 0, Math.PI*2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(w/1.2, 0, w/1.5, h/2, 0, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  if (type === 2) {
-    ctx.fillRect(-w, -h/3, w*2, h/1.5);
-  }
-
-  if (type === 3) {
-    ctx.beginPath();
-    ctx.arc(-w/1.2, 0, h/1.2, 0, Math.PI*2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(w/1.2, 0, h/1.2, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  if (type === 4) {
-    ctx.beginPath();
-    ctx.moveTo(-w, -h/2);
-    ctx.lineTo(w, -h/2);
-    ctx.lineTo(w/1.2, h/2);
-    ctx.lineTo(-w/1.2, h/2);
-    ctx.closePath();
-    ctx.fill();
-  }
+  ctx.fillRect(-w - 20, -h / 2, w, h);
+  ctx.fillRect(20, -h / 2, w, h);
 
   ctx.restore();
 }
 
-function drawCigar(FACE) {
+/* ===============================
+   CIGAR
+================================ */
 
+function drawCigar(FACE) {
   ctx.save();
   ctx.translate(FACE.centerX + 180 * FACE.scale, FACE.mouthY);
 
   const length = 120 * FACE.scale;
 
-  // Body gradient
-  const cigarGrad = ctx.createLinearGradient(0, 0, length, 0);
-  cigarGrad.addColorStop(0, "#7a4b25");
-  cigarGrad.addColorStop(1, "#3e2412");
-
-  ctx.fillStyle = cigarGrad;
+  ctx.fillStyle = "#7a4b25";
   ctx.fillRect(0, -10, length, 25);
-
-  // Ember glow
-  const ember = ctx.createRadialGradient(length, 2, 5, length, 2, 20);
-  ember.addColorStop(0, "yellow");
-  ember.addColorStop(0.5, "red");
-  ember.addColorStop(1, "transparent");
-
-  ctx.fillStyle = ember;
-  ctx.beginPath();
-  ctx.arc(length, 2, 20, 0, Math.PI * 2);
-  ctx.fill();
 
   ctx.restore();
 }
 
+/* ===============================
+   VIGNETTE
+================================ */
 
-function addShadow(blur = 20, offsetX = 0, offsetY = 8, color = "rgba(0,0,0,0.5)") {
-  ctx.shadowBlur = blur;
-  ctx.shadowOffsetX = offsetX;
-  ctx.shadowOffsetY = offsetY;
-  ctx.shadowColor = color;
+function drawVignette() {
+  ctx.save();
+
+  const vignette = ctx.createRadialGradient(
+    400, 400, 200,
+    400, 400, 600
+  );
+
+  vignette.addColorStop(0, "rgba(0,0,0,0)");
+  vignette.addColorStop(1, "rgba(0,0,0,0.4)");
+
+  ctx.fillStyle = vignette;
+  ctx.fillRect(0, 0, 800, 800);
+
+  ctx.restore();
 }
 
-function clearShadow() {
-  ctx.shadowBlur = 0;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 0;
-}
-
-// subtle vignette
-const vignette = ctx.createRadialGradient(400,400,200,400,400,600);
-vignette.addColorStop(0,"rgba(0,0,0,0)");
-vignette.addColorStop(1,"rgba(0,0,0,0.4)");
-ctx.fillStyle = vignette;
-ctx.fillRect(0,0,800,800);
-
-function drawDuck() {
-  if (!imageReady) return;
-  ctx.drawImage(baseDuck, 0, 0, 800, 800);
-}
+/* ===============================
+   GENERATE
+================================ */
 
 function generatePFP() {
+  if (!imageReady) return;
 
-  if (!imageReady) {
-    alert("Image not loaded yet.");
-    return;
-  }
+  // 🔥 Prevent transform stacking bug
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const rarity = drawBackground();
+  drawBackground();
   drawDuck();
 
   const FACE = getFaceMetrics();
@@ -602,22 +496,19 @@ function generatePFP() {
   drawCigar(FACE);
 
   drawVignette();
-
-  console.log("Background rarity:", rarity);
 }
-
 
 generateBtn.addEventListener("click", generatePFP);
 
+/* ===============================
+   DOWNLOAD
+================================ */
+
 downloadBtn.addEventListener("click", () => {
-  try {
-    const link = document.createElement("a");
-    link.download = "pnlope-pfp.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  } catch (err) {
-    alert("Generate image first.");
-  }
+  const link = document.createElement("a");
+  link.download = "pnlope-pfp.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
 });
 
 let shineOffset = -800;
@@ -648,6 +539,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
