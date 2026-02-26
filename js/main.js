@@ -667,15 +667,20 @@ function generatePFP() {
   drawBackground();
   drawDuck();
 
-  const FACE = getFaceMetrics();
+function getFaceMetrics() {
+  const w = canvas.width;
+  const h = canvas.height;
 
-  drawJacket(FACE);
-  drawChain(FACE);
-  drawHat(FACE);
-  drawSunglasses(FACE);
-  drawCigar(FACE);
-
-  drawVignette();
+  return {
+    centerX: w * 0.5,
+    centerY: h * 0.5,
+    eyeY:     h * 0.36,  
+    eyeOffsetX: w * 0.14,
+    mouthY:   h * 0.52, 
+    headTopY: h * 0.12,  
+    neckY:    h * 0.65,  
+    scale: w / 800
+  };
 }
 
 generateBtn.addEventListener("click", generatePFP);
@@ -709,6 +714,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
