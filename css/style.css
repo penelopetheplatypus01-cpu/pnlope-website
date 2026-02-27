@@ -334,8 +334,9 @@ footer {
 /* FAKE BUY */
 .buy-ticker {
   position: fixed;
-  bottom: 200px; /* above your buy button */
-  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: auto;
   background: #111;
   color: #00ff88;
   padding: 12px 18px;
@@ -361,7 +362,7 @@ footer {
     left: 50%;
     right: auto;
     transform: translate(-50%, 20px);
-    bottom: 200px;
+    bottom: 20px;
     width: 90%;
     max-width: none;
     text-align: center;
@@ -853,6 +854,7 @@ footer,
     color            0.4s ease,
     border-color     0.4s ease;
 }
+
 
 
 
