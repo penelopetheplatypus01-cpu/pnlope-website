@@ -631,6 +631,228 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ============================================
+   TRACK PICKER UI
+============================================ */
+.track-picker {
+  position: fixed;
+  bottom: 155px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.track-picker.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+
+.track-btn {
+  background: #78350f;
+  color: #fff7ed;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.track-btn:hover {
+  transform: scale(1.06);
+}
+
+.track-btn.active {
+  border-color: #fff7ed;
+  background: #92400e;
+}
+
+
+/* ============================================
+   THEME: DEFAULT (warm brown — no class needed)
+============================================ */
+
+
+/* ============================================
+   THEME: POND VIBES 🌿
+   Triggered by track2.mp3
+============================================ */
+body.theme-pond {
+  background: linear-gradient(180deg, #052e16, #064e3b);
+  color: #d1fae5;
+}
+
+body.theme-pond header {
+  background: #064e3b;
+  color: #ecfdf5;
+}
+
+body.theme-pond footer {
+  background: #064e3b;
+  color: #a7f3d0;
+}
+
+body.theme-pond .story {
+  background: #022c1a;
+  color: #d1fae5;
+}
+
+body.theme-pond .token-label {
+  color: #6ee7b7;
+  text-shadow: 0 0 18px rgba(52, 211, 153, 0.5);
+}
+
+body.theme-pond .tokenomics,
+body.theme-pond .ca-box + div {
+  background: #064e3b;
+}
+
+body.theme-pond .token-box {
+  background: #065f46;
+}
+
+body.theme-pond .token-storybox {
+  background: #ecfdf5;
+  color: #064e3b;
+}
+
+body.theme-pond .ca-box {
+  background: #059669;
+}
+
+body.theme-pond .mock-phase {
+  border-color: #34d399;
+}
+
+body.theme-pond .mock-phase:hover {
+  background: rgba(52, 211, 153, 0.1);
+}
+
+body.theme-pond .music-toggle {
+  background: #065f46;
+}
+
+body.theme-pond .track-btn {
+  background: #064e3b;
+  color: #a7f3d0;
+}
+
+body.theme-pond .track-btn.active {
+  background: #065f46;
+  border-color: #a7f3d0;
+}
+
+body.theme-pond .floating-buy {
+  background: #059669;
+}
+
+
+/* ============================================
+   THEME: ZOO ESCAPE 🌙
+   Triggered by track3.mp3
+============================================ */
+body.theme-escape {
+  background: linear-gradient(180deg, #0f0c29, #302b63, #24243e);
+  color: #e0d7ff;
+}
+
+body.theme-escape header {
+  background: #1a1040;
+  color: #e9d5ff;
+}
+
+body.theme-escape footer {
+  background: #1a1040;
+  color: #c4b5fd;
+}
+
+body.theme-escape .story {
+  background: #1e1b4b;
+  color: #e0d7ff;
+}
+
+body.theme-escape .token-label {
+  color: #c4b5fd;
+  text-shadow: 0 0 18px rgba(167, 139, 250, 0.6);
+}
+
+body.theme-escape .tokenomics,
+body.theme-escape .ca-box + div {
+  background: #1a1040;
+}
+
+body.theme-escape .token-box {
+  background: #2e1065;
+}
+
+body.theme-escape .token-storybox {
+  background: #2d1b69;
+  color: #e9d5ff;
+}
+
+body.theme-escape .ca-box {
+  background: #7c3aed;
+}
+
+body.theme-escape .mock-phase {
+  border-color: #a78bfa;
+}
+
+body.theme-escape .mock-phase:hover {
+  background: rgba(167, 139, 250, 0.1);
+}
+
+body.theme-escape .music-toggle {
+  background: #2e1065;
+}
+
+body.theme-escape .track-btn {
+  background: #1e1b4b;
+  color: #c4b5fd;
+}
+
+body.theme-escape .track-btn.active {
+  background: #2e1065;
+  border-color: #c4b5fd;
+}
+
+body.theme-escape .floating-buy {
+  background: #7c3aed;
+}
+
+
+/* ============================================
+   SMOOTH TRANSITIONS ON ALL THEME SWAPS
+============================================ */
+body,
+header,
+footer,
+.story,
+.tokenomics,
+.token-box,
+.token-storybox,
+.ca-box,
+.mock-phase,
+.music-toggle,
+.track-btn,
+.floating-buy {
+  transition:
+    background       0.6s ease,
+    background-image 0.6s ease,
+    color            0.4s ease,
+    border-color     0.4s ease;
+}
 
 
 
