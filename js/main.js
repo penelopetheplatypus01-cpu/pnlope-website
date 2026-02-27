@@ -18,22 +18,68 @@ function unlockVault() {
 /* ===============================
    BACKGROUND MUSIC TOGGLE
 ================================ */
+/* ===============================
+   BACKGROUND MUSIC + THEME SWITCHER
+================================ */
 (() => {
-  const music = document.getElementById("bg-music");
-  const toggle = document.querySelector(".music-toggle");
+  const music  = document.getElementById("bg-music");
+  const toggle = document.getElementById("musicToggle");
+  const picker = document.getElementById("trackPicker");
+  const ALL_THEMES = ["theme-pond", "theme-escape"]; // add more here if needed
 
   if (!music || !toggle) return;
 
   music.volume = 0.35;
 
+  // ── Open / close the track picker ──
   toggle.addEventListener("click", () => {
-    if (music.paused) {
+    const isOpen = picker.classList.toggle("open");
+
+    // If picker just closed, also play/pause
+    if (!isOpen) {
+      if (music.paused) {
+        music.play().catch(() => {});
+        toggle.classList.add("playing");
+      } else {
+        music.pause();
+        toggle.classList.remove("playing");
+      }
+    }
+  });
+
+  // ── Close picker when clicking anywhere else ──
+  document.addEventListener("click", (e) => {
+    if (!toggle.contains(e.target) && !picker.contains(e.target)) {
+      picker.classList.remove("open");
+    }
+  });
+
+  // ── Track buttons ──
+  document.querySelectorAll(".track-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // don't bubble to document close listener
+
+      const src   = btn.dataset.src;
+      const theme = btn.dataset.theme;
+
+      // Swap active button
+      document.querySelectorAll(".track-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      // Swap track
+      music.pause();
+      music.src = src;
+      music.load();
       music.play().catch(() => {});
       toggle.classList.add("playing");
-    } else {
-      music.pause();
-      toggle.classList.remove("playing");
-    }
+
+      // Swap theme
+      document.body.classList.remove(...ALL_THEMES);
+      if (theme) document.body.classList.add(theme);
+
+      // Close picker after picking
+      picker.classList.remove("open");
+    });
   });
 })();
 
@@ -709,6 +755,7 @@ const observer = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => observer.observe(el));
+
 
 
 
