@@ -359,19 +359,19 @@ footer {
 /* 📱 Mobile Optimization */
 @media (max-width: 600px) {
   .buy-ticker {
-    left: 50%;
+    left: 12px;
     right: auto;
-    transform: translate(-50%, 20px);
+    transform: translateY(20px);
     bottom: 20px;
-    width: 90%;
-    max-width: none;
-    text-align: center;
+    width: auto;
+    max-width: 75%;
+    text-align: left;
     font-size: 13px;
     padding: 10px 14px;
   }
 
   .buy-ticker.show {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
 }
 
@@ -854,6 +854,7 @@ footer,
     color            0.4s ease,
     border-color     0.4s ease;
 }
+
 
 
 
