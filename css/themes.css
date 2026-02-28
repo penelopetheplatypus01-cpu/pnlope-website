@@ -2257,3 +2257,554 @@ body.theme-escape .dex-live .dex-footer a {
 #section-default { display: block; }
 body.theme-pond   #section-default,
 body.theme-escape #section-default { display: none; }
+
+
+/* ============================================================
+   MOBILE RESPONSIVE — ALL THEMES
+   Breakpoints: 768px (tablet), 480px (phone)
+============================================================ */
+
+@media (max-width: 768px) {
+
+  /* ── GENERAL ── */
+  .container {
+    padding: 0 1rem;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 2.5rem 1.2rem 3rem;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 2.8rem !important;
+    line-height: 1.1;
+  }
+
+  header p {
+    font-size: 1rem !important;
+  }
+
+  .socials {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    gap: 2rem;
+    padding: 2rem 0 !important;
+  }
+
+  .hero img {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .story {
+    padding: 0 !important;
+    border-left: none !important;
+    border-top: 4px solid;
+    padding-top: 1.5rem !important;
+  }
+
+  .token-wrapper {
+    justify-content: center;
+  }
+
+  /* ── FLOATING BUY ── */
+  .floating-buy {
+    font-size: 0.7rem !important;
+    padding: 10px 14px !important;
+    bottom: 80px !important;
+    right: 12px !important;
+  }
+
+  /* ── MUSIC TOGGLE ── */
+  .music-toggle {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.2rem !important;
+    bottom: 130px !important;
+    right: 12px !important;
+  }
+
+  .track-picker {
+    right: 12px !important;
+    bottom: 185px !important;
+  }
+
+  /* ── BUY TICKER ── */
+  .buy-ticker {
+    left: 10px !important;
+    right: auto !important;
+    max-width: 70vw;
+    font-size: 0.75rem;
+  }
+
+  /* ── TOKENOMICS ── */
+  .token-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* ── HOW TO BUY ── */
+  .buy-steps {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── ROADMOCK ── */
+  .mock-phase {
+    text-align: left;
+  }
+
+  /* ── DEX CHART ── */
+  .dex-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .dex-stats-row {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .dex-frame iframe {
+    height: 300px !important;
+  }
+
+  /* ── THEME SECTIONS ── */
+  .theme-section.visible {
+    padding: 2rem 1rem !important;
+  }
+
+
+  /* ════════════════════════════════
+     🟡 DEFAULT — OG PLATYPUS MOBILE
+  ════════════════════════════════ */
+
+  #section-default {
+    padding: 1.5rem 1rem;
+  }
+
+  #section-default .og-title h2 {
+    font-size: 1.4rem;
+  }
+
+  #section-default .og-reasons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  #section-default .og-reason {
+    padding: 1rem;
+  }
+
+  #section-default .og-reason .reason-emoji {
+    font-size: 1.6rem;
+  }
+
+  #section-default .og-reason h3 {
+    font-size: 0.82rem;
+  }
+
+  #section-default .og-reason p {
+    font-size: 0.72rem;
+  }
+
+  #section-default .og-post {
+    padding: 0.9rem 1rem;
+  }
+
+  #section-default .og-cta {
+    padding: 1.2rem 1rem;
+  }
+
+  #section-default .og-cta p {
+    font-size: 0.95rem;
+  }
+
+
+  /* ════════════════════════════════
+     🌿 POND VIBES MOBILE
+  ════════════════════════════════ */
+
+  body.theme-pond header {
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%);
+    padding: 3rem 1.5rem 5rem;
+    text-align: center;
+  }
+
+  body.theme-pond header h1 {
+    font-size: 3.2rem !important;
+  }
+
+  body.theme-pond header::before {
+    display: none;
+  }
+
+  body.theme-pond header::after {
+    width: 200px;
+    height: 200px;
+    right: -10%;
+    bottom: 15%;
+  }
+
+  body.theme-pond .hero {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.theme-pond .story {
+    border-left: none !important;
+    border-top: 4px solid #4ade80;
+    padding: 1.5rem 0 0 !important;
+    text-align: center;
+  }
+
+  body.theme-pond .token-wrapper {
+    justify-content: center;
+  }
+
+  body.theme-pond footer {
+    clip-path: polygon(0 8%, 30% 0, 100% 8%, 100% 100%, 0 100%);
+    padding-top: 3rem;
+  }
+
+  /* Pond section */
+  #section-pond .pond-title {
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: center;
+  }
+
+  #section-pond .pond-title h2 {
+    font-size: 1.5rem !important;
+  }
+
+  #section-pond .pond-tagline {
+    text-align: center;
+    font-size: 0.88rem;
+  }
+
+  #section-pond .pond-body {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+
+  #section-pond .pond-why h3,
+  #section-pond .pond-community h3 {
+    text-align: center;
+  }
+
+  #section-pond .pond-mission {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.2rem 1rem;
+  }
+
+  /* Pond dex readings */
+  body.theme-pond .dex-readings {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  body.theme-pond .dex-reading {
+    flex: 1 1 40%;
+  }
+
+  /* Pond sections with big border-radius */
+  body.theme-pond .rug-honesty {
+    border-radius: 0 40px 0 40px;
+  }
+
+  body.theme-pond .tokenomics {
+    border-radius: 40px 0 40px 0;
+    padding: 3rem 1.5rem;
+  }
+
+  body.theme-pond .ca-box {
+    border-radius: 30px;
+  }
+
+
+  /* ════════════════════════════════
+     🌙 ZOO ESCAPE MOBILE
+  ════════════════════════════════ */
+
+  body.theme-escape header {
+    padding: 0;
+  }
+
+  body.theme-escape header h1 {
+    font-size: 2.2rem !important;
+    padding: 1.5rem 1rem 0.5rem !important;
+    letter-spacing: 0.03em;
+  }
+
+  body.theme-escape header h1::before {
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+  }
+
+  body.theme-escape .header-tagline {
+    margin: 0.5rem 1rem;
+    font-size: 0.78rem;
+  }
+
+  body.theme-escape header p:not(.header-tagline) {
+    padding: 0 1rem;
+    font-size: 0.7rem;
+  }
+
+  body.theme-escape .socials {
+    padding: 1rem 1rem 1.5rem;
+    gap: 0.4rem;
+  }
+
+  body.theme-escape .btn {
+    font-size: 0.65rem !important;
+    padding: 6px 10px !important;
+  }
+
+  /* Hero */
+  body.theme-escape .hero {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+    padding: 1.5rem 0 !important;
+  }
+
+  body.theme-escape .hero img {
+    max-width: 180px;
+    margin: 0 auto;
+    box-shadow: 3px 3px 0 #ff3c00, 5px 5px 0 rgba(255,60,0,0.15);
+  }
+
+  body.theme-escape .story {
+    padding: 1rem !important;
+  }
+
+  body.theme-escape .story::before {
+    font-size: 0.55rem;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  body.theme-escape .token-label {
+    font-size: 1.5rem !important;
+    letter-spacing: 0.15em;
+  }
+
+  /* Escape dossier: stack columns */
+  #section-escape .esc-topbar {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  #section-escape .esc-filename {
+    font-size: 0.55rem;
+    word-break: break-all;
+    letter-spacing: 0.05em;
+  }
+
+  #section-escape .esc-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #section-escape .esc-col {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  #section-escape .esc-col-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+
+  #section-escape .esc-row {
+    font-size: 0.75rem;
+  }
+
+  #section-escape .esc-key {
+    font-size: 0.62rem;
+    min-width: 100px;
+  }
+
+  #section-escape .esc-val {
+    font-size: 0.75rem;
+  }
+
+  #section-escape .esc-val.big {
+    font-size: 1rem;
+  }
+
+  /* Threat meters */
+  #section-escape .threat-meter {
+    margin-top: 1rem;
+  }
+
+  #section-escape .tm-label {
+    font-size: 0.58rem;
+  }
+
+  /* Intercepts */
+  #section-escape .intercept-item {
+    padding: 0.8rem 0.8rem;
+  }
+
+  #section-escape .int-meta {
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.55rem;
+  }
+
+  #section-escape .int-msg {
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  #section-escape .esc-cta {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.2rem 1rem;
+    gap: 1rem;
+  }
+
+  #section-escape .esc-cta-text {
+    font-size: 0.75rem;
+  }
+
+  #section-escape .esc-cta-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 1rem;
+  }
+
+  #section-escape .esc-footer-line {
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.58rem;
+  }
+
+  /* Escape dex scanlines */
+  body.theme-escape .dex-scanlines {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  body.theme-escape .dex-scan-cell {
+    padding: 0.6rem 0.8rem;
+  }
+
+  body.theme-escape .sc-label {
+    font-size: 0.55rem;
+  }
+
+  body.theme-escape .sc-val {
+    font-size: 0.75rem;
+  }
+
+  body.theme-escape .dex-live {
+    padding: 1.5rem 1rem 1rem !important;
+  }
+
+  /* Tokenomics table */
+  body.theme-escape .token-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1px;
+  }
+
+  body.theme-escape .token-box p {
+    font-size: 1.4rem;
+  }
+
+  /* Roadmock */
+  body.theme-escape .mock-phase {
+    padding-left: 2.5rem;
+  }
+
+  body.theme-escape .mock-phase::before {
+    font-size: 0.8rem;
+  }
+
+  /* How to buy steps */
+  body.theme-escape .buy-steps {
+    border: 1px solid #1a1a1a;
+  }
+
+  body.theme-escape .step {
+    border-right: none !important;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  /* Footer */
+  body.theme-escape footer {
+    padding: 1.5rem 1rem;
+  }
+
+  body.theme-escape footer::before {
+    font-size: 0.58rem;
+  }
+
+}
+
+
+/* ── Extra small phones ── */
+@media (max-width: 480px) {
+
+  header h1 {
+    font-size: 2.2rem !important;
+  }
+
+  body.theme-pond header h1 {
+    font-size: 2.5rem !important;
+  }
+
+  body.theme-escape header h1 {
+    font-size: 1.8rem !important;
+  }
+
+  .hero img {
+    max-width: 180px;
+  }
+
+  #section-default .og-reasons {
+    grid-template-columns: 1fr !important;
+  }
+
+  #section-default .og-reason:nth-child(odd),
+  #section-default .og-reason:nth-child(even) {
+    transform: none;
+  }
+
+  #section-pond .pond-why-item {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  #section-escape .esc-grid {
+    font-size: 0.75rem;
+  }
+
+  body.theme-escape .dex-scanlines {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .track-picker {
+    right: 8px !important;
+  }
+
+  .floating-buy {
+    font-size: 0.65rem !important;
+    padding: 8px 10px !important;
+  }
+
+  .token-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+}
