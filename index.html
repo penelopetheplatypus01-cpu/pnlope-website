@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Penelope the Platypus</title>
+
+<link rel="icon" type="image/png" href="assets/iconhead.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/themes.css">
+</head>
+
+<body>
+
+<audio id="bg-music" loop preload="auto">
+  <source src="assets/platypus song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-toggle" id="musicToggle" title="Toggle music">🎵</div>
+
+<div class="track-picker" id="trackPicker">
+  <button class="track-btn active" data-src="assets/platypus song.mp3" data-theme="">🎵 OG Platypus</button>
+  <button class="track-btn" data-src="assets/track2.mp3" data-theme="theme-pond">🌿 Pond Vibes</button>
+  <button class="track-btn" data-src="assets/track3.mp3" data-theme="theme-escape">🌙 Zoo Escape</button>
+</div>
+
+<header>
+  <h1>PNLope the Platypus</h1>
+
+  <p style="font-weight:900;font-size:1.25rem;">
+    The platypus that faked pregnancy, escaped captivity, landed on-chain <br>
+    and is now escaping your wallet.
+  </p>
+
+  <p style="opacity:0.85;">
+    No mercy. Zoo keepers still coping.
+  </p>
+
+  <div class="socials">
+    <a href="https://x.com/PNLopePlatypus" target="_blank" class="btn x">𝕏</a>
+    <a href="https://x.com" target="_blank" class="btn xc">Community</a>
+    <a href="https://dexscreener.com" target="_blank" class="btn dex">DexScreener</a>
+    <a href="https://pump.fun" target="_blank" class="btn pump">Pump.Fun</a>
+    <a href="https://en.wikipedia.org/wiki/Penelope_(platypus)" target="_blank" class="btn wiki">Wikipedia</a>
+    <a href="https://www.reddit.com/r/todayilearned/comments/1nkp019/til_about_penelope_the_platypus_who_escaped_the/" target="_blank" class="btn reddit">Reddit</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ① HERO -->
+  <section class="hero">
+    <img src="assets/pnlope-no-bg.png" alt="Penelope" />
+
+    <div class="story">
+      <div class="token-wrapper">
+        <span class="token-label">$PNLope</span>
+        <a href="lore.html" class="scroll-link">
+          <span class="scroll-emoji">📜</span>
+        </a>
+      </div>
+
+      <h2>The Great Escape (1957)</h2>
+      <p>
+        Penelope — a duck-billed, web-footed, flat-tailed<br>
+        and <span class="easter-egg" ondblclick="unlockVault()">egg</span>-laying mammal —
+        faked a pregnancy, farmed resources,
+        and dipped when the
+        <a href="zookeeper.html" class="no-underline-link">zookeeper</a>
+        wasn't looking. No one saw it coming.<br>
+        Outsmarted a zoo? What pure audacity.<br><br>
+        Work smarter. Escape harder. 🧠✨
+      </p>
+    </div>
+  </section>
+
+<!-- 🟡 OG PLATYPUS EXCLUSIVE SECTION (default theme only) -->
+<section id="section-default">
+
+  <div class="og-title">
+    <h2>🦆 Why Platypus Though?</h2>
+  </div>
+  <span class="og-subtitle">valid question. here's why.</span>
+
+  <div class="og-reasons">
+    <div class="og-reason">
+      <span class="reason-emoji">🥚</span>
+      <h3>She faked a pregnancy</h3>
+      <p>To double her food rations. Before yield farming was even a thing.</p>
+    </div>
+    <div class="og-reason">
+      <span class="reason-emoji">🏃</span>
+      <h3>Escaped a zoo</h3>
+      <p>1957. Taronga Zoo, Sydney. Gone. Still missing. Never caught.</p>
+    </div>
+    <div class="og-reason">
+      <span class="reason-emoji">📖</span>
+      <h3>Wikipedia verified</h3>
+      <p>This is real. Not AI generated lore. She has her own Wikipedia page.</p>
+    </div>
+    <div class="og-reason">
+      <span class="reason-emoji">💸</span>
+      <h3>0% tax. Full send.</h3>
+      <p>No buy tax. No sell tax. No tricks. Just vibes and a platypus.</p>
+    </div>
+  </div>
+
+  <p class="og-posts-title">📣 What people are saying</p>
+
+  <div class="og-posts">
+    <div class="og-post">
+      <span class="post-x">𝕏</span>
+      <div class="post-header">
+        <span class="post-avatar">🐾</span>
+        <div>
+          <div class="post-name">SwampDegen</div>
+          <div class="post-handle">@SwampDegen · just now</div>
+        </div>
+      </div>
+      <p class="post-text">missed dogs. missed frogs. NOT missing the platypus that <strong>literally faked a pregnancy to escape a zoo.</strong> this is the one frfr</p>
+      <div class="post-stats">
+        <span>🔁 412</span>
+        <span>❤️ 2.1K</span>
+        <span>👀 48K</span>
+      </div>
+    </div>
+
+    <div class="og-post">
+      <span class="post-x">𝕏</span>
+      <div class="post-header">
+        <span class="post-avatar">🦆</span>
+        <div>
+          <div class="post-name">DuckBillMaxi</div>
+          <div class="post-handle">@DuckBillMaxi · 3m</div>
+        </div>
+      </div>
+      <p class="post-text">bro she escaped in <strong>1957</strong> and nobody ever found her. she's been free for 68 years. longest running rug pull victim: the zoo 💀</p>
+      <div class="post-stats">
+        <span>🔁 889</span>
+        <span>❤️ 5.4K</span>
+        <span>👀 91K</span>
+      </div>
+    </div>
+
+    <div class="og-post">
+      <span class="post-x">𝕏</span>
+      <div class="post-header">
+        <span class="post-avatar">🥚</span>
+        <div>
+          <div class="post-name">EggMaximalist</div>
+          <div class="post-handle">@EggMaximalist · 7m</div>
+        </div>
+      </div>
+      <p class="post-text"><strong>0% tax, renounced, locked liquidity</strong> + the coin is literally about a platypus that outsmarted a zoo in the 1950s. why am i not already in</p>
+      <div class="post-stats">
+        <span>🔁 1.2K</span>
+        <span>❤️ 8.9K</span>
+        <span>👀 130K</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="og-cta">
+    <p>She escaped the zoo. Now she's escaping your portfolio too. 🦆</p>
+    <a href="https://dexscreener.com" target="_blank">🥚 Ape In Now</a>
+  </div>
+
+</section>
+
+
+  <!-- ② POND VIBES EXCLUSIVE SECTION -->
+  <!-- Slides in when Pond Vibes track is selected -->
+  <section id="section-pond" class="theme-section">
+
+    <div class="pond-title">
+      <h2>🌿 Swamp Intelligence Brief</h2>
+      <span class="pond-issue">Issue No. 1 — Wetlands Division</span>
+    </div>
+
+    <p class="pond-tagline">
+      A nature-backed community token. Rooted in the story of one platypus
+      who outsmarted an entire zoo. Now she's outsmarting the market.
+    </p>
+
+    <div class="pond-body">
+
+      <!-- Why buy -->
+      <div class="pond-why">
+        <h3>Why the Swamp Wins</h3>
+
+        <div class="pond-why-item">
+          <span class="why-icon">🦆</span>
+          <div class="why-text">
+            <strong>Real Story. Real Coin.</strong>
+            <span>Penelope actually escaped Taronga Zoo in 1957. Wikipedia-verified. Zookeeper-traumatizing.</span>
+          </div>
+        </div>
+
+        <div class="pond-why-item">
+          <span class="why-icon">🥚</span>
+          <div class="why-text">
+            <strong>Faked pregnancy. Doubled rations.</strong>
+            <span>She played the system before DeFi existed. The OG airdrop farmer.</span>
+          </div>
+        </div>
+
+        <div class="pond-why-item">
+          <span class="why-icon">💧</span>
+          <div class="why-text">
+            <strong>0% tax. No hidden fees.</strong>
+            <span>Pure swamp water. Nothing added. Nothing taken.</span>
+          </div>
+        </div>
+
+        <div class="pond-why-item">
+          <span class="why-icon">🌿</span>
+          <div class="why-text">
+            <strong>Conservation-linked</strong>
+            <span>A percentage of creator rewards goes toward small zoo donations. Penelope would want it that way.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Community quotes -->
+      <div class="pond-community">
+        <h3>From the Pond</h3>
+
+        <div class="pond-community-item">
+          <div class="ci-name">🐾 SwampDegen.sol</div>
+          <div class="ci-text">"Missed dogs. Missed frogs. Not missing the platypus. This is the one."</div>
+        </div>
+
+        <div class="pond-community-item">
+          <div class="ci-name">🌿 WetlandWhale</div>
+          <div class="ci-text">"She faked a pregnancy to get more food. That's the most based thing I've ever heard."</div>
+        </div>
+
+        <div class="pond-community-item">
+          <div class="ci-name">🥚 EggMaximalist</div>
+          <div class="ci-text">"0% tax, renounced, locked liquidity. And the story is actually real. Aping in."</div>
+        </div>
+      </div>
+
+    </div>
+    <!-- REMOVED: pond-stats (duplicates tokenomics section below) -->
+    <!-- REMOVED: pond-mission CTA (duplicates floating buy + conservation section) -->
+
+  </section>
+
+
+  <!-- ③ ZOO ESCAPE EXCLUSIVE SECTION -->
+  <!-- Slides in when Zoo Escape track is selected -->
+  <section id="section-escape" class="theme-section">
+
+    <div class="esc-topbar">
+      <span class="esc-filename">C:\BREACH\ASSETS\PNLOPE_DOSSIER_1957.classified</span>
+      <div class="esc-badges">
+        <span class="esc-badge red">⚠ LIVE SIGNAL</span>
+        <span class="esc-badge outline">CLEARANCE: NONE</span>
+      </div>
+    </div>
+
+    <div class="esc-grid">
+
+      <!-- Col 1: Subject file -->
+      <div class="esc-col">
+        <div class="esc-col-title">// SUBJECT FILE</div>
+        <div class="esc-row">
+          <span class="esc-key">Name</span>
+          <span class="esc-val red">PENELOPE</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Species</span>
+          <span class="esc-val">Duck-billed Platypus</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Status</span>
+          <span class="esc-val red">AT LARGE — SINCE 1957</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Last Seen</span>
+          <span class="esc-val">Taronga Zoo, Sydney</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Method</span>
+          <span class="esc-val">Faked pregnancy. Double rations.</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Location</span>
+          <span class="esc-val green">SOLANA BLOCKCHAIN</span>
+        </div>
+
+        <div class="threat-meter" style="margin-top:1.2rem;">
+          <div class="tm-label"><span>THREAT LEVEL</span><span>97%</span></div>
+          <div class="threat-bar-bg"><div class="threat-bar-fill" style="width:97%"></div></div>
+          <div class="tm-label"><span>INTELLIGENCE</span><span>100%</span></div>
+          <div class="threat-bar-bg"><div class="threat-bar-fill" style="width:100%"></div></div>
+          <div class="tm-label"><span>RECAPTURE ODDS</span><span>0%</span></div>
+          <div class="threat-bar-bg"><div class="threat-bar-fill" style="width:0%;background:#333;"></div></div>
+        </div>
+      </div>
+
+      <!-- Col 2: Token data -->
+      <div class="esc-col">
+        <div class="esc-col-title">// ASSET DATA</div>
+        <div class="esc-row">
+          <span class="esc-key">Ticker</span>
+          <span class="esc-val big">$PNLope</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Network</span>
+          <span class="esc-val">Solana</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Supply</span>
+          <span class="esc-val green">1,000,000,000</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Buy Tax</span>
+          <span class="esc-val green">0%</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Sell Tax</span>
+          <span class="esc-val green">0%</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Liquidity</span>
+          <span class="esc-val green">LOCKED</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Ownership</span>
+          <span class="esc-val green">RENOUNCED</span>
+        </div>
+        <div class="esc-row">
+          <span class="esc-key">Rug Risk</span>
+          <span class="esc-val red">SHE ALREADY RUGGED THE ZOO</span>
+        </div>
+      </div>
+
+      <!-- Col 3: Analyst notes -->
+      <div class="esc-col">
+        <div class="esc-col-title">// ANALYST NOTES</div>
+        <div class="esc-row" style="flex-direction:column;gap:0.3rem;align-items:flex-start;">
+          <span class="esc-key">Entry signal</span>
+          <span class="esc-val" style="text-align:left;">Token live. Liquidity locked. Ownership renounced. Community forming. Classic early setup.</span>
+        </div>
+        <div class="esc-row" style="flex-direction:column;gap:0.3rem;align-items:flex-start;margin-top:0.5rem;">
+          <span class="esc-key">Narrative strength</span>
+          <span class="esc-val green" style="text-align:left;">MAXIMUM — Wikipedia-verified lore. Actually happened in 1957.</span>
+        </div>
+        <div class="esc-row" style="flex-direction:column;gap:0.3rem;align-items:flex-start;margin-top:0.5rem;">
+          <span class="esc-key">Risk assessment</span>
+          <span class="esc-val" style="text-align:left;">Meme coin. No utility. No roadmap. No promises. DYOR. Don't use rent money.</span>
+        </div>
+        <div class="esc-row" style="flex-direction:column;gap:0.3rem;align-items:flex-start;margin-top:0.5rem;">
+          <span class="esc-key">Verdict</span>
+          <span class="esc-val red" style="text-align:left;font-weight:900;">SHE ESCAPED. YOU DECIDE IF YOU DO TOO.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="esc-intercepts">
+      <div class="esc-intercept-title">// INTERCEPTED COMMUNITY TRANSMISSIONS</div>
+
+      <div class="intercept-item">
+        <div class="int-meta">
+          <span class="int-from">FROM: 0xDegenLord</span>
+          <span>TIMESTAMP: RECENT</span>
+          <span>ENCRYPTED: NO</span>
+        </div>
+        <div class="int-msg">"<strong>0% tax. Renounced. Locked.</strong> And the Wikipedia article is right there. She faked a pregnancy to escape a zoo. I've never aped in faster."</div>
+      </div>
+
+      <div class="intercept-item">
+        <div class="int-meta">
+          <span class="int-from">FROM: QuackTrader.sol</span>
+          <span>TIMESTAMP: RECENT</span>
+          <span>ENCRYPTED: NO</span>
+        </div>
+        <div class="int-msg">"Missed dogs. Missed frogs. Not missing <strong>the platypus that outsmarted an entire zoo.</strong> Early."</div>
+      </div>
+
+      <div class="intercept-item">
+        <div class="int-meta">
+          <span class="int-from">FROM: ZookeeperStillCoping</span>
+          <span>TIMESTAMP: 1957</span>
+          <span>ENCRYPTED: NO</span>
+        </div>
+        <div class="int-msg">"<strong>She's gone.</strong> We don't know how. She doubled her food for three weeks before vanishing. Outsmarted us all."</div>
+      </div>
+    </div>
+
+    <div class="esc-cta">
+      <div class="esc-cta-text">
+        <strong>// ACQUIRE ASSET — WINDOW OPEN</strong>
+        Penelope is live on Solana. 0% tax. Renounced. Locked.
+        The zoo couldn't hold her. Can your portfolio?
+      </div>
+      <a href="https://dexscreener.com" target="_blank" class="esc-cta-btn">⚡ BUY $PNLope</a>
+    </div>
+
+    <div class="esc-footer-line">
+      <span>FILE: PNLOPE_1957.classified ── PAGES: UNKNOWN ── AUTHOR: REDACTED</span>
+      <span>SIGNAL ACTIVE <span class="blink">█</span></span>
+    </div>
+
+  </section>
+
+
+  <!-- ④ CONTRACT ADDRESS + TOKENOMICS -->
+  <section class="tokenomics reveal">
+    <div class="ca-box" id="copy-ca">
+      <h3>🚨 CONTRACT ADDRESS (CLICK TO COPY)</h3>
+      <p style="font-size:1.4rem;font-weight:900;">Sol11111111111</p>
+      <p>Missed dogs. Missed frogs. Don't miss platypus.</p>
+    </div>
+
+    <div class="token-grid">
+      <div class="token-box"><h3>Supply</h3><p>1B</p></div>
+      <div class="token-box"><h3>Tax</h3><p>0%</p></div>
+      <div class="token-box"><h3>Liquidity</h3><p>Locked</p></div>
+      <div class="token-box"><h3>Ownership</h3><p>Renounced</p></div>
+    </div>
+  </section>
+
+
+  <!-- ⑤ HOW TO BUY -->
+  <section class="how-to-buy reveal" id="how-to-buy">
+    <h2>🛒 How To Buy</h2>
+
+    <div class="buy-steps">
+      <div class="step">
+        <h3>1️⃣ Get a Wallet</h3>
+        <p>Download a Solana-compatible wallet and fund it with SOL.</p>
+      </div>
+      <div class="step">
+        <h3>2️⃣ Go to Dex</h3>
+        <p>Open DexScreener or your preferred DEX and search for $PNLope.</p>
+      </div>
+      <div class="step">
+        <h3>3️⃣ Swap SOL</h3>
+        <p>Swap SOL for $PNLope. Set slippage if needed.</p>
+      </div>
+      <div class="step">
+        <h3>4️⃣ Welcome to the Pond</h3>
+        <p>You are now officially a certified swamper. 🦆</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑥ LIVE CHART -->
+  <section class="dex-live">
+
+    <div class="dex-header">
+      <div class="dex-title">
+        <div class="dex-live-dot"></div>
+        <div>
+          <h2>📊 Live Chart</h2>
+          <!-- REMOVED: dex-stats-row pills — Network/Tax/Supply already in tokenomics above -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 🌿 Pond Vibes: field station readings (hidden on other themes) -->
+    <div class="dex-readings">
+      <div class="dex-reading">
+        <span class="reading-label">Species</span>
+        <span class="reading-val">$PNLope</span>
+      </div>
+      <div class="dex-reading">
+        <span class="reading-label">Habitat</span>
+        <span class="reading-val">Solana</span>
+      </div>
+      <div class="dex-reading">
+        <span class="reading-label">Status</span>
+        <span class="reading-val">🟢 Free</span>
+      </div>
+      <div class="dex-reading">
+        <span class="reading-label">Threat</span>
+        <span class="reading-val">None</span>
+      </div>
+    </div>
+
+    <!-- 🌙 Zoo Escape: terminal scan cells (hidden on other themes) -->
+    <div class="dex-scanlines">
+      <div class="dex-scan-cell">
+        <span class="sc-label">Asset</span>
+        <span class="sc-val">$PNLope</span>
+      </div>
+      <div class="dex-scan-cell">
+        <span class="sc-label">Chain</span>
+        <span class="sc-val">Solana</span>
+      </div>
+      <div class="dex-scan-cell">
+        <span class="sc-label">Tax</span>
+        <span class="sc-val green">0%</span>
+      </div>
+      <div class="dex-scan-cell">
+        <span class="sc-label">Liq.</span>
+        <span class="sc-val green">LOCKED</span>
+      </div>
+      <div class="dex-scan-cell">
+        <span class="sc-label">Status</span>
+        <span class="sc-val red">ESCAPED</span>
+      </div>
+    </div>
+
+    <div class="dex-frame">
+      <iframe
+        src="https://dexscreener.com/solana/bvjxpww5esbc9za1ifgik1qtexji6lt9ufyktximpesj?embed=1&theme=dark&chart=1&info=0&trades=0"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="dex-footer">
+      <small>Data via DexScreener · Updates live</small>
+      <a href="https://dexscreener.com" target="_blank">View Full Chart →</a>
+    </div>
+
+  </section>
+
+
+  <!-- ⑦ FAKE BUY TICKER -->
+  <div id="buyTicker" class="buy-ticker">
+    <div class="ticker-message"></div>
+    <small class="ticker-disclaimer">*simulation for entertainment*</small>
+  </div>
+
+
+  <!-- ⑧ ROADMOCK -->
+  <section class="roadmock reveal" id="roadmock">
+    <h2>🗺️ Roadmock</h2>
+
+    <div class="mock-phase">
+      <h3>Phase 1 – The Egg</h3>
+      <p>Launch. Confuse everyone. Survive.</p>
+    </div>
+    <div class="mock-phase">
+      <h3>Phase 2 – The Pond</h3>
+      <p>Memes multiply. Community grows. Chart does things.</p>
+    </div>
+    <div class="mock-phase">
+      <h3>Phase 3 – The Zoo</h3>
+      <p>Conservation donation. More chaos.</p>
+    </div>
+    <div class="mock-phase">
+      <h3>Phase 4 – ???</h3>
+      <p>We don't know. That's the point.</p>
+    </div>
+  </section>
+
+
+  <!-- ⑨ WARNING -->
+  <section class="rug-honesty">
+    <h2>⚠️ WARNING</h2>
+
+    <ul>
+      <li>There is no roadmap.</li>
+      <li>There is no utility.</li>
+      <li>No one is promising you generational wealth.</li>
+    </ul>
+
+    <p class="rug-punchline">
+      If that scares you — don't buy.<br>
+      If you buy — welcome to the swamp. 🦆
+    </p>
+  </section>
+
+
+  <!-- ⑩ CONSERVATION — kept once, removed from pond-mission duplicate -->
+  <section class="conservation-commitment reveal">
+    <h3>Conservation Commitment</h3>
+
+    <p class="commitment-main">A % of creator rewards are reserved for:</p>
+
+    <ul class="commitment-list">
+      <li>🛠 Buy backs and website development</li>
+      <li>🌿 Small zoo conservation donations</li>
+    </ul>
+
+    <div class="donation-goal">
+      <small>Donation updates will be publicly shared.</small>
+    </div>
+
+    <p class="disclaimer">
+      Not affiliated with any zoo organization. Donations will be made
+      independently and transparently.
+    </p>
+  </section>
+
+
+  <!-- ⑪ EASTER EGG (hidden by default) -->
+  <section id="secret" class="meme-vault">
+    <h2>🕵️ Secret Egg Nest</h2>
+    <p>You found Penelope with her eggs!<br>You are smart!</p>
+    <img src="assets/easter-egg-no-bg.png">
+  </section>
+
+</main>
+
+<a href="https://pump.fun" target="_blank" class="floating-buy" id="floatingBuy">
+  APE OR REGRET
+</a>
+
+<footer>
+  <p>@ 2026 PNLope the Platypus. Strategically Free.</p>
+  <p>
+    PNLope is a community-driven meme project. If you're reading this, you're early.<br>
+    Nothing here is financial advice.
+  </p>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script src="js/theme-switcher.js" defer></script>
+
+</body>
+</html>
