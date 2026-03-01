@@ -1221,6 +1221,8 @@ body.theme-escape footer::before {
 }
 
 #section-default .og-post .post-name {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
   font-size: 0.82rem;
   font-weight: 900;
   color: #1a1a1a;
@@ -1246,6 +1248,9 @@ body.theme-escape footer::before {
   color: #333;
   line-height: 1.6;
   margin-bottom: 0.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
 }
 
 #section-default .og-post .post-text strong {
@@ -1762,17 +1767,17 @@ body.theme-pond   #section-escape { display: none; }
   /* ── FLOATING BUY ── */
   /* Only tweak size — NO position !important so JS drag works freely */
   .floating-buy {
-    font-size: 0.75rem;
-    padding: 10px 14px;
+    font-size: 0.9rem;
+    padding: 14px 20px;
   }
 
   /* ── MUSIC TOGGLE ── */
   .music-toggle {
-    width: 44px !important;
-    height: 44px !important;
-    font-size: 1.2rem !important;
-    bottom: 130px !important;
-    right: 12px !important;
+    width: 54px !important;
+    height: 54px !important;
+    font-size: 1.5rem !important;
+    bottom: 140px !important;
+    right: 14px !important;
   }
 
   .track-picker {
@@ -2133,8 +2138,8 @@ body.theme-pond   #section-escape { display: none; }
   }
 
   .floating-buy {
-    font-size: 0.65rem !important;
-    padding: 8px 10px !important;
+    font-size: 0.9rem !important;
+    padding: 14px 20px !important;
   }
 
   .token-grid {
@@ -2181,30 +2186,36 @@ body.theme-pond   #section-escape { display: none; }
 }
 
 /* Masonry grid */
+/* ── Meme gallery: horizontal slider on all screen sizes ── */
 .meme-masonry {
-  column-count: 4;
-  column-gap: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 0.5rem 0 1.5rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+  cursor: grab;
 }
 
-@media (max-width: 1024px) { .meme-masonry { column-count: 3; } }
+.meme-masonry:active { cursor: grabbing; }
+.meme-masonry::-webkit-scrollbar { height: 4px; }
+.meme-masonry::-webkit-scrollbar-track { background: transparent; }
+.meme-masonry::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
+
+.meme-masonry .meme-card {
+  flex: 0 0 280px;
+  max-width: 280px;
+  margin-bottom: 0;
+  scroll-snap-align: start;
+}
+
 @media (max-width: 680px) {
-  .meme-masonry {
-    column-count: unset;
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 0.8rem;
-    padding-bottom: 1rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .meme-masonry::-webkit-scrollbar { display: none; }
   .meme-masonry .meme-card {
-    flex: 0 0 78vw;
-    max-width: 78vw;
-    margin-bottom: 0;
-    scroll-snap-align: center;
+    flex: 0 0 80vw;
+    max-width: 80vw;
     transform: none !important;
   }
   .meme-masonry .meme-card:hover {
