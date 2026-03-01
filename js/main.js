@@ -242,6 +242,35 @@ document.addEventListener('touchend', stopDrag);
     if (e.key === 'ArrowRight') show(current + 1);
   });
 
+
+
+/* ── Meme Gallery: drag-to-scroll on desktop ── */
+(() => {
+  const slider = document.getElementById('memeGrid');
+  if (!slider) return;
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  slider.addEventListener('mousedown', e => {
+    // Don't activate drag if clicking a card to open lightbox
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('mouseleave', () => { isDown = false; });
+  slider.addEventListener('mouseup', () => { isDown = false; });
+  slider.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+})();
   // Swipe support in lightbox
   let touchStartX = 0;
   lb.addEventListener('touchstart', e => {
