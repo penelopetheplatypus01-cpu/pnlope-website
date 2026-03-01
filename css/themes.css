@@ -1109,7 +1109,7 @@ body.theme-escape footer::before {
 }
 
 #section-default .og-title h2 {
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'Fredoka One', 'Nunito', sans-serif;
   font-size: 2rem;
   color: #78350f;
   margin: 0;
@@ -1122,6 +1122,7 @@ body.theme-escape footer::before {
   color: #92400e;
   opacity: 0.7;
   margin-bottom: 2rem;
+  font-family: 'Nunito', sans-serif;
   font-style: italic;
 }
 
@@ -1169,7 +1170,7 @@ body.theme-escape footer::before {
 }
 
 #section-default .og-reason h3 {
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'Fredoka One', 'Nunito', sans-serif;
   font-size: 0.95rem;
   color: #78350f;
   margin-bottom: 0.4rem;
@@ -1184,7 +1185,7 @@ body.theme-escape footer::before {
 
 /* Fake X/Twitter posts */
 #section-default .og-posts-title {
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'Fredoka One', 'Nunito', sans-serif;
   font-size: 1.1rem;
   color: #78350f;
   margin-bottom: 1rem;
@@ -2186,8 +2187,30 @@ body.theme-pond   #section-escape { display: none; }
 }
 
 @media (max-width: 1024px) { .meme-masonry { column-count: 3; } }
-@media (max-width: 680px)  { .meme-masonry { column-count: 2; } }
-@media (max-width: 420px)  { .meme-masonry { column-count: 1; } }
+@media (max-width: 680px) {
+  .meme-masonry {
+    column-count: unset;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.8rem;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .meme-masonry::-webkit-scrollbar { display: none; }
+  .meme-masonry .meme-card {
+    flex: 0 0 78vw;
+    max-width: 78vw;
+    margin-bottom: 0;
+    scroll-snap-align: center;
+    transform: none !important;
+  }
+  .meme-masonry .meme-card:hover {
+    transform: scale(1.02) !important;
+  }
+}
 
 /* Individual card */
 .meme-card {
