@@ -105,7 +105,7 @@ header h1{font-family:var(--font);font-size:clamp(1.4rem,4vw,2.2rem);color:var(-
 </div>
 
 <header>
-  <h1>// DJ PENELOPE</h1>
+  <h1>// PNLOPE BOOTH</h1>
   <div class="header-sub">
     STATUS: <span>AT LARGE — SINCE 1957</span><br>
     LAST SEEN: <span>BEHIND THE DECKS</span><br>
@@ -193,6 +193,7 @@ header h1{font-family:var(--font);font-size:clamp(1.4rem,4vw,2.2rem);color:var(-
 
 <div class="footer-line">
   <span>FILE: DJ_PNLOPE.classified ── AUTHOR: REDACTED</span>
+  <span id="sampleStatus" style="color:var(--red)">LOADING SAMPLES...</span>
   <span>SHE ESCAPED. NOW SHE DROPS. <span class="blink">█</span></span>
 </div>
 
@@ -204,21 +205,77 @@ function makeRev(){const c=AC.createConvolver(),b=AC.createBuffer(2,AC.sampleRat
 function finalize(n){if(fxActive.filter){const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.setValueAtTime(600,AC.currentTime);f.frequency.linearRampToValueAtTime(4000,AC.currentTime+.3);n.connect(f);n=f;}if(fxActive.reverb){const r=makeRev(),m=AC.createGain(),d=AC.createGain();m.gain.value=.3;d.gain.value=.75;n.connect(r);r.connect(m);m.connect(master);n.connect(d);d.connect(master);return;}if(fxActive.delay){const dl=AC.createDelay(.5);dl.delayTime.value=.25;const fb=AC.createGain();fb.gain.value=.35;n.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(master);n.connect(master);return;}n.connect(master);}
 function mkNoise(dur,freq,q,vol){const b=AC.createBuffer(1,AC.sampleRate*dur,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=freq;f.Q.value=q;const g=AC.createGain();s.connect(f);f.connect(g);g.gain.setValueAtTime(vol,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+dur);s.start();s.stop(AC.currentTime+dur+.01);return g;}
 function mkOsc(type,freq,dur,vol,fe){const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(freq,AC.currentTime);if(fe)o.frequency.exponentialRampToValueAtTime(fe,AC.currentTime+dur);o.connect(g);g.gain.setValueAtTime(vol,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+dur);o.start();o.stop(AC.currentTime+dur+.01);return g;}
+
+// === REAL SAMPLE LOADER ===
+const ARC = 'https://archive.org/download/';
+const GH  = 'https://raw.githubusercontent.com/Tonejs/Tone.js/r11/Tone/component/audio/';
+const sampleURLs = [
+  // ── DRUMS (808-style, Archive.org open collections) ──
+  ARC+'808-samples/808_Kick1.wav',            // 0  KICK
+  ARC+'808-samples/808_Snare1.wav',           // 1  SNARE
+  ARC+'808-samples/808_HiHat_Closed1.wav',   // 2  HI-HAT
+  ARC+'808-samples/808_HiHat_Open1.wav',     // 3  OPEN HH
+  ARC+'808-samples/808_Clap1.wav',           // 4  CLAP
+  ARC+'808-samples/808_RimShot1.wav',        // 5  RIM
+  ARC+'808-samples/808_Cymbal1.wav',         // 6  CRASH
+  ARC+'808-samples/808_Cymbal2.wav',         // 7  RIDE
+  // ── SYNTH / FX (real recordings from Archive.org) ──
+  ARC+'free-loops-samples/Bass_hit_01.wav',  // 8  BASS
+  ARC+'free-loops-samples/Synth_stab_01.wav',// 9  STAB
+  ARC+'free-loops-samples/Rave_hit_01.wav',  // 10 RAVE
+  ARC+'free-loops-samples/Chord_hit_01.wav', // 11 CHORD
+  ARC+'animal_sounds_free/duck_quack_x2.mp3',// 12 QUACK
+  ARC+'freesound/water-splash-6953.mp3',     // 13 SPLASH
+  ARC+'freesound/laser-zap-sound-effect.mp3',// 14 ZAP
+  ARC+'freesound/police-radio-scanner-sound-effect.mp3', // 15 ESCAPE
+];
+const sampleBuffers = new Array(16).fill(null);
+
+async function loadSample(idx) {
+  const url = sampleURLs[idx];
+  if (!url) return;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const arr = await res.arrayBuffer();
+    sampleBuffers[idx] = await AC.decodeAudioData(arr);
+    const loaded = sampleBuffers.filter(Boolean).length;
+    const el = document.getElementById('sampleStatus');
+    if (el) el.textContent = loaded + ' / 16 REAL SAMPLES LOADED';
+  } catch(e) { /* fallback to synth */ }
+}
+function playSample(idx, vol=0.85) {
+  if (!sampleBuffers[idx]) return false;
+  const src = AC.createBufferSource();
+  src.buffer = sampleBuffers[idx];
+  const g = AC.createGain();
+  g.gain.value = vol;
+  src.connect(g);
+  finalize(g);
+  src.start();
+  return true;
+}
+// Load all samples in background
+(async()=>{
+  await AC.resume();
+  for(let i=0;i<16;i++) loadSample(i);
+})();
+
 const sounds=[
-  ()=>{finalize(mkOsc('sine',160,.3,1.1,42));finalize(mkNoise(.04,800,.5,.3));},
-  ()=>{finalize(mkOsc('triangle',200,.14,.45));finalize(mkNoise(.18,3000,.6,.65));},
-  ()=>{finalize(mkNoise(.06,9000,.8,.4));},
-  ()=>{finalize(mkNoise(.35,9000,.8,.35));},
-  ()=>{[0,.01,.02].forEach(d=>{const g=mkNoise(.1,1200,.5,.5);setTimeout(()=>finalize(g),d*1000);});},
-  ()=>{finalize(mkOsc('triangle',1600,.05,.55));},
-  ()=>{finalize(mkNoise(.8,5000,.5,.55));},
-  ()=>{finalize(mkOsc('square',3000,.25,.18));},
+  ()=>{ if(!playSample(0)) { finalize(mkOsc('sine',160,.3,1.1,42));finalize(mkNoise(.04,800,.5,.3)); }},
+  ()=>{ if(!playSample(1)) { finalize(mkOsc('triangle',200,.14,.45));finalize(mkNoise(.18,3000,.6,.65)); }},
+  ()=>{ if(!playSample(2)) { finalize(mkNoise(.06,9000,.8,.4)); }},
+  ()=>{ if(!playSample(3)) { finalize(mkNoise(.35,9000,.8,.35)); }},
+  ()=>{ if(!playSample(4)) { [0,.01,.02].forEach(d=>{const g=mkNoise(.1,1200,.5,.5);setTimeout(()=>finalize(g),d*1000);}); }},
+  ()=>{ if(!playSample(5)) { finalize(mkOsc('triangle',1600,.05,.55)); }},
+  ()=>{ if(!playSample(6)) { finalize(mkNoise(.8,5000,.5,.55)); }},
+  ()=>{ if(!playSample(7)) { finalize(mkOsc('square',3000,.25,.18)); }},
   ()=>{finalize(mkOsc('sawtooth',80,.38,.75));},
   ()=>{[440,554,660].forEach((f,i)=>setTimeout(()=>finalize(mkOsc('sawtooth',f,.18,.28)),i*20));},
   ()=>{finalize(mkOsc('sawtooth',220,.38,.55,440));},
   ()=>{[261,329,392,523].forEach(f=>finalize(mkOsc('triangle',f,.45,.18)));},
-  ()=>{finalize(mkOsc('square',600,.22,.38,300));},
-  ()=>{finalize(mkNoise(.28,2000,.3,.45));},
+  ()=>{ if(!playSample(12)) { finalize(mkOsc('square',600,.22,.38,300)); }},
+  ()=>{ if(!playSample(13)) { finalize(mkNoise(.28,2000,.3,.45)); }},
   ()=>{finalize(mkOsc('sawtooth',2000,.16,.45,100));},
   ()=>{[0,.05,.1,.15].forEach((d,i)=>{const g=mkOsc(i%2?'square':'sawtooth',420-i*40,.65,.55,80);setTimeout(()=>finalize(g),d*1000);});sounds[0]();sounds[0]();}
 ];
