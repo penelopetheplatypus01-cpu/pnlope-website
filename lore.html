@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Penelope</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=IM+Fell+English&display=swap');
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #caa46a 0%, #8b5e34 100%);
+  font-family: 'UnifrakturCook', cursive;
+  color: #2b1a0d;
+  overflow-x: hidden;
+  animation: bookOpen 1.8s ease forwards;
+}
+
+/* Slow fade-in like opening book */
+@keyframes bookOpen {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Flickering candle glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(255,200,120,0.15), transparent 60%);
+  animation: flicker 3s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes flicker {
+  0%,100% { opacity: 0.15; }
+  50% { opacity: 0.25; }
+}
+
+/* Burned dark corners */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(0,0,0,0.4), transparent 40%),
+    radial-gradient(circle at top right, rgba(0,0,0,0.4), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(0,0,0,0.4), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(0,0,0,0.4), transparent 40%);
+  pointer-events: none;
+}
+
+/* Scroll */
+.scroll-container {
+  position: relative;
+  max-width: 760px;
+  padding: 5rem 3.5rem;
+  background: linear-gradient(180deg, #fdf1c9, #efd79b);
+  border-radius: 10px;
+  box-shadow:
+    0 0 80px rgba(0,0,0,0.5),
+    inset 0 0 140px rgba(0,0,0,0.15);
+  border: 2px solid rgba(92,58,30,0.5);
+  text-align: center;
+}
+
+/* Scroll curl top */
+.scroll-container::before {
+  content: "";
+  position: absolute;
+  top: -45px;
+  left: -5%;
+  width: 110%;
+  height: 90px;
+  background: radial-gradient(ellipse at center, #d6b276 40%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+/* Scroll curl bottom */
+.scroll-container::after {
+  content: "";
+  position: absolute;
+  bottom: -45px;
+  left: -5%;
+  width: 110%;
+  height: 90px;
+  background: radial-gradient(ellipse at center, #d6b276 40%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+/* Title */
+h1 {
+  font-family: 'UnifrakturCook', cursive;
+  font-size: 3rem;
+  letter-spacing: 3px;
+  margin-bottom: 2.5rem;
+  text-shadow:
+    2px 2px 0 rgba(0,0,0,0.3),
+    0 0 4px rgba(60,30,10,0.3);
+}
+
+/* Ink bleed effect */
+p {
+  font-family: 'IM Fell English', serif;
+  font-size: 1.2rem;
+  line-height: 1.9;
+  margin-bottom: 2rem;
+  text-shadow:
+    0 0 1px rgba(60,30,10,0.3),
+    0 0 3px rgba(60,30,10,0.15);
+}
+
+.italic-text {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.justified-text {
+  text-align: justify;
+}
+
+/* Button */
+a {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.6rem;
+  background: #5c3a1e;
+  color: #fdf1c9;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  background: #3e2613;
+  transform: translateY(-2px);
+}
+</style>
+
+</head>
+<body>
+
+<div class="scroll-container">
+
+<h1>📜 PNLope</h1>
+
+<p class="justified-text">
+<br>
+<br>
+Long ago, when traders were still using logic and risk management,
+a mysterious force appeared in the market...
+<br><br>
+<strong> PNLope </strong>
+<br><br>
+No one knows who created it.<br>
+Some say it was born from a trader who bought the
+top and refused to sell.<br>
+Other say it's the spirit of "one more trade" living inside every chart.<br><br>
+• stare at chart for 18 hours straight<br>
+• trust vibes over fundamentals<br>
+• and believe every dip is a blessing in disguise
+<br><br>
+Over time, PNLope became more than a ticker - <br>
+it became a lifestyle of chaos, faith, and eternal <strong>HODL</strong>.
+</p>
+
+<p class="italic-text">"The market tests the weak. PNLope makes them stronger."</p>
+
+<a href="index.html">← Back</a>
+
+</div>
+
+<script>
+
+// ===== Dynamic Candle Flicker =====
+const glow = document.createElement("div");
+glow.style.position = "fixed";
+glow.style.inset = "0";
+glow.style.pointerEvents = "none";
+glow.style.zIndex = "0";
+document.body.appendChild(glow);
+
+function flicker() {
+  const intensity = 0.12 + Math.random() * 0.1;
+  const posX = 48 + Math.random() * 4;
+  const posY = 38 + Math.random() * 4;
+
+  glow.style.background = `
+    radial-gradient(circle at ${posX}% ${posY}%,
+      rgba(255,200,120,${intensity}),
+      transparent 60%)
+  `;
+}
+
+setInterval(flicker, 120);
+
+
+// ===== Floating Dust Particles =====
+for (let i = 0; i < 25; i++) {
+  const dust = document.createElement("div");
+  dust.style.position = "fixed";
+  dust.style.width = "3px";
+  dust.style.height = "3px";
+  dust.style.background = "rgba(255,255,255,0.15)";
+  dust.style.borderRadius = "50%";
+  dust.style.top = Math.random() * 100 + "vh";
+  dust.style.left = Math.random() * 100 + "vw";
+  dust.style.pointerEvents = "none";
+  dust.style.zIndex = "0";
+  dust.style.animation = `floatDust ${8 + Math.random()*6}s linear infinite`;
+  document.body.appendChild(dust);
+}
+
+// Inject keyframes dynamically
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes floatDust {
+  from { transform: translateY(0px); opacity: 0.2; }
+  to { transform: translateY(-120px); opacity: 0; }
+}
+`;
+document.head.appendChild(style);
+
+
+// ===== Scroll Subtle Breathing Motion =====
+const scroll = document.querySelector(".scroll-container");
+
+let breathe = 0;
+setInterval(() => {
+  breathe += 0.02;
+  const scale = 1 + Math.sin(breathe) * 0.002;
+  scroll.style.transform = `scale(${scale})`;
+}, 50);
+
+
+// ===== Stagger Fade-In Text =====
+const elements = document.querySelectorAll(".scroll-container h1, .scroll-container p, .scroll-container a");
+
+elements.forEach((el, index) => {
+  el.style.opacity = 0;
+  el.style.transform = "translateY(15px)";
+  el.style.transition = "all 1.2s ease";
+  
+  setTimeout(() => {
+    el.style.opacity = 1;
+    el.style.transform = "translateY(0)";
+  }, 600 + index * 300);
+});
+
+</script>
+
+</body>
+</html>
